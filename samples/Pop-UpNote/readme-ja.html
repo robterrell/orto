@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<title>付箋</title>
+
+<style type="text/css">
+<!--
+body {
+	margin-right: 3%;
+	margin-left: 3%;
+}
+pre {
+	background-color: #FFFFCC;
+	padding-right: 3%;
+	padding-left: 3%;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-style:solid;
+	border-width:1px;
+}
+h4 {
+	color: rgb(0, 94, 160);
+}
+-->
+</style>
+
+</head>
+
+<body>
+<h1>付箋</h1>
+
+<h4>１．このサンプルについて</h4>
+<p>付箋のサンプルです。ドラッグが出来ます。
+PopUpNote-ja.html を開けば実行できます。</p>
+
+<h4>２．コンパイル方法</h4>
+<p>コンパイルするには、JDK 1.2 以降が必要です。<br>
+<p>手動でコンパイルするには、以下のようにコマンドを入力してください。
+現在のフォルダは、samplesとします。classes にはコンパイル済みのクラスがあります。</p>
+
+<pre>cd src
+javac -bootclasspath ..\..\..\lib\ortoClasses.jar jp\orto\popupnote\*.java
+</pre>
+
+<p>生成されるクラスファイルから PopUpNote-ja.html を作る必要があります。それは以下のようにやります。</p>
+
+<pre>java -jar ..\..\..\bin\ortoar.jar -main jp.orto.popupnote.PopUpNote -mainHTML ..\design\design-ja.html -encoding Shift_JIS jp\orto\popupnote\*.class
+copy PopUpNote.html ..\PopUpNote-ja.html</pre>
+
+<h4>３．実行方法</h4>
+PopUpNote-ja.html をブラウザから開くだけですが、
+実行時に design フォルダを読みに行くので、PopUpNote-ja.html と design フォルダを
+同じフォルダ内におく必要があります。
+
+<h4>４．ライセンス</h4>
+<p>ソースコードに関しては BSD ライセンスとします。</p>
+
+</body>
+</html>

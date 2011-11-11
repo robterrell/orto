@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<title>みみず君</title>
+
+<style type="text/css">
+<!--
+body {
+	margin-right: 3%;
+	margin-left: 3%;
+}
+pre {
+	background-color: #FFFFCC;
+	padding-right: 3%;
+	padding-left: 3%;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-style:solid;
+	border-width:1px;
+}
+h4 {
+	color: rgb(0, 94, 160);
+}
+-->
+</style>
+
+</head>
+
+<body>
+<h1>みみず君</h1>
+
+<h4>１．このサンプルについて</h4>
+<p>このサンプルはみみず君を成長させるゲームです。
+Worm-ja.html を開けば実行できます。</p>
+
+<h4>２．コンパイル方法</h4>
+<p>コンパイルするには、JDK 1.2 以降が必要です。<br>
+<p>手動でコンパイルするには、以下のようにコマンドを入力してください。
+現在のフォルダは、samplesとします。classes にはコンパイル済みのクラスがあります。</p>
+
+<pre>cd src
+javac -bootclasspath ..\..\..\lib\ortoClasses.jar jp\orto\worm\*.java
+</pre>
+
+<p>生成される３つのクラスファイルから Worm-ja.html を作る必要があります。それは以下のようにやります。</p>
+
+<pre>java -jar ..\..\..\bin\ortoar.jar -main jp.orto.worm.Worm -mainHTML ..\design\design.html -encoding Shift_JIS jp\orto\worm\*.class
+copy Worm.html ..\Worm-ja.html</pre>
+
+<h4>３．ライセンス</h4>
+<p>ソースコードに関しては BSD ライセンスとします。</p>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+	<link href="../tutorial.css" rel="stylesheet" type="text/css">
+	<link href="../index.html" rel="contents" type="text/html" />
+	<link href="../Basic/Internal/Internal.html" rel="prev" type="text/html" />
+	<link href="CompContainer/CompContainer.html" rel="next" type="text/html" />
+	<link rev="made" href="mailto:support@orto.jp" />
+	<title>Hello World を作ってみよう</title>
+</head>
+
+<body background="../back.gif">
+<h1>Hello World を作ってみよう </h1>
+
+<p>伝統のHello Worldをまず作ってみましょう。</p>
+
+<pre>
+import orto.ui.*;
+
+public class HelloWorld {
+  public HelloWorld() {
+    Panel mainPanel = Browser.getMainWindow().getBody().createPanel();
+    mainPanel.setHTML(&quot;Hello World&quot;);
+    mainPanel.setVisible(true);
+  }
+}
+</pre>
+
+<p>簡単ですね。Ortoでは、public static void main(String[] args) を使いません。
+あるクラスのインスタンス（オブジェクト）が作られることによりプログラムが開始します。
+iアプリなどと同じです。</p>
+
+<p>では、public HelloWorld() 内の３行を順番に見ていきましょう。</p>
+
+<table border="1" cellspacing="0" cellpadding="4">
+	<tr><th nowrap="nowrap">行番号</th><th>説明</th></tr>
+	<tr><td align="center">１</td>
+		<td>表示するためのパネルを作っています。
+			パネルは物をのせるための透明のシートです。Java の Swing の JPanel と同じ考えです。
+			Browser.getMainWindow().getBody() で、HTML タグ内の BODY タグを取り出してきています。
+			その BODY タグに対して、createPanel() することにより、新しいパネルを作っています。
+		</td>
+	</tr><tr><td align="center">２</td>
+		<td>パネル内の文章を設定しています。
+			ここでは、Hello World としか、書いていませんが、HTML のタグを使うことも当然出来ます。
+		</td>
+	</tr><tr><td align="center">３</td>
+		<td>パネルを表示しています。
+			true なら表示、false なら非表示です。
+			準備している最中に表示すると汚らしくなるので、
+			createPanel() で作成したパネルは初期状態は非表示になっています。
+		</td>
+	</tr>
+</table>
+
+<h4>コンパイル方法</h4>
+<pre>javac -bootclasspath lib\ortoClasses.jar HelloWorld.java
+java -jar bin\ortoar.jar -main HelloWorld HelloWorld.class</pre>
+
+<p>ここでは、 Orto の展開先に、HelloWorld.java を置いたとしましたが、
+違う場合は、lib や bin のパスを適切に指定してください。</p>
+
+</body>
+</html>

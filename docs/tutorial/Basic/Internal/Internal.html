@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+	<link href="../../tutorial.css" rel="stylesheet" type="text/css">
+	<link href="../../index.html" rel="contents" type="text/html" />
+	<link href="../FirstRun.html" rel="prev" type="text/html" />
+	<link href="../../GUI/HelloWorld.html" rel="next" type="text/html" />
+	<link rev="made" href="mailto:support@orto.jp" />
+	<title>Orto の仕組み</title>
+</head>
+
+<body background="../../back.gif">
+<h1>Orto の仕組み</h1>
+<p>Orto は Web アプリケーションを作成するための言語です。
+Servlet, PHP を補完します。
+より理解を深めるために、その動作の仕組みを説明します。
+</p>
+<p>ブラウザは１９９８年ごろから、従来の静的HTMLだけでなく、DynamicHTMLも表示できるようになりました。
+DynamicHTMLは３つの要素から成立しています。
+</p>
+
+<p style="text-align:center"><img src="internal1.gif" width="445" height="154" alt=""></p>
+
+<p>静的HTMLが文章の論理構造を扱い、スタイルシート(CSS)が色などの表示面を扱い、JavaScriptが動的な側面を扱うように分かれています。Orto はこの DynamicHTML を使っています。</p>
+
+<p style="text-align:center"><img src="internal2.gif" width="470" height="100" alt=""></p>
+
+<p>Java コンパイラが Java ソースファイルを Java クラスファイルに変換し、
+Orto がさらに、それを Dynamic HTML に変換します。
+Dynamic HTML なので、プラグインは必要ありません。
+Web アプリケーションの利用者はすぐに表示することが出来ます。
+</p>
+
+</body>
+</html>

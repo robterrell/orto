@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="xetris" default="ortoar-en" basedir=".">
+
+	<property name="ortoHome" value="../.." />
+	<property name="ortoarJar" value="${ortoHome}/bin/ortoar.jar"/>
+	<property name="ortoClasses" value="${ortoHome}/lib/ortoClasses.jar"/>
+
+	<target name="ortoar-en">
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.xetris.Xetris
+				-mainHTML ../design/design.html
+				-language en
+				-encoding ISO-8859-1
+				-outputHTML ../Xetris-en.html
+				-outputScript ../Xetris-en.js
+				jp/orto/xetris/*.class"/>
+		</java>
+	</target>
+
+	<target name="ortoar-ja">
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.xetris.Xetris
+				-mainHTML ../design/design.html
+				-language ja
+				-encoding Shift_JIS
+				-outputHTML ../Xetris-ja.html
+				-outputScript ../Xetris-ja.js
+				jp/orto/xetris/*.class"/>
+		</java>
+	</target>
+
+	<target name="compress-en">
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.xetris.Xetris
+				-mainHTML ../design/design.html
+				-language en
+				-encoding ISO-8859-1
+				-outputHTML ../Xetris-en.html
+				-outputScript ../Xetris-en.js
+				-compress
+				jp/orto/xetris/*.class"/>
+		</java>
+	</target>
+
+	<target name="compress-ja">
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.xetris.Xetris
+				-mainHTML ../design/design.html
+				-language ja
+				-encoding Shift_JIS
+				-outputHTML ../Xetris-ja.html
+				-outputScript ../Xetris-ja.js
+				-compress
+				jp/orto/xetris/*.class"/>
+		</java>
+	</target>
+
+</project>

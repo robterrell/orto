@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+	<link href="../../tutorial.css" rel="stylesheet" type="text/css" />
+	<link href="../../index.html" rel="contents" type="text/html" />
+	<link href="../Event/Event.html" rel="prev" type="text/html" />
+	<link href="../MonkeyTiger.html" rel="next" type="text/html" />
+	<link rel="help" href="http://orto.jp/c-board/c-board.cgi" type="text/html" />
+	<link rev="made" href="mailto:support@orto.jp" />
+	<title>プログラミングスタイル</title>
+</head>
+
+<body background="../../back.gif">
+
+<h1>プログラミングスタイル</h1>
+
+<p><span style="color:red">この文章が難しすぎると感じたら、
+<a href="http://orto.jp/c-board/c-board.cgi">掲示板</a>までご意見ください。</span>
+なお、ここに書いてあるのは、僕が考える限りのベストな方法であるに過ぎないので、
+この方法に従う必要はぜんぜんありません。</p>
+
+<h4>モデル・ビュー・コントロール</h4>
+
+<p>オブジェクト指向による GUI プログラミングにおいて、
+最も重要なのは、プログラムをモデル・ビュー・コントロールに分けることです。
+Model View Control は略して MVC とも言われます。
+それぞれ、</p>
+
+<p>
+<table width="400em" border="1" cellspacing="0" cellpadding="3">
+	<tr>
+		<td>ビュー</td><td>表示・ユーザーへの入出力面</td>
+	</tr><tr>
+		<td>コントロール</td><td>全体の流れの制御</td>
+	</tr><tr>
+		<td>モデル</td><td>データを管理</td>
+	</tr>
+</table>
+</p>
+
+<p>を受け持ちます。
+モデル・ビュー・コントロールに分けることのメリットは、いろいろありますが、最大の２つは、</p>
+
+<ol>
+<li>試行錯誤・変更に対するコストが少なくなる。<strong>柔軟性が高くなる！</strong></li>
+<li>デザインをデザイナーさんに分離できる場合が多い。</li>
+</ol>
+
+<p>プログラミングは予想外のことが発生しやすく、試行錯誤・変更に対するコストは
+なるべく小さくすること、つまり、プログラムの柔軟性をあげることが
+全体の開発の手間を減らすことにつながります。つまり楽になるんです！</p>
+
+<p>柔軟性をあげるには、さらに、ビュー・コントロール・モデル間の依存関係が、
+ビュー → コントロール → モデルにすることが大切です。</p>
+
+<p>
+例えば、名簿ソフトを作っていて、新たに、「生まれた国」という情報を管理したく
+なったとしましょう。その時は、モデルにも、ビューにもその変更を追加しなくてはなりません。
+しかし、「生まれた国」の入力方式（つまり、ビューの変更）を
+フリー記述方式から選択方式に変更したとしても、モデルの変更は必要ありません。</p>
+
+<p>つまり、ビュー → コントロール → モデルの範囲内で、依存関係は収めることが可能であり、
+不必要な逆向きの依存関係を作らないことが大切です。モデルとビューが相互に依存していたり
+すると、ビューを変更したときに、モデルまで変更しなくてはならなく、
+変更に対する手間が大きくなります。また、相互依存が網の目のようにはびこると、
+全体像が見えにくくなり、変更時に手間がかかります。</p>
+
+<h4>Servlet VS Orto</h4>
+
+<p>従来の Servlet のプログラミングでは、
+これが以下のように分かれていました。</p>
+
+<p style="text-align:center"><img src="Style1.gif" width="356" height="157" alt="ServletのMVC" /></p>
+
+<p>Orto では次のようになります。</p>
+
+<p style="text-align:center"><img src="Style2.gif" width="354" height="156" alt="OrtoのMVC" /></p>
+
+<p>Servlet/JSP 方式では、JSP の中に、本来コントロールの領域であるはずのものが
+紛れ込んでいて、それを除去するためのいろいろな工夫が <a href="http://jakarta.apache.org/struts/">Struts</a> をはじめ、
+なされていますが、なかなか完璧にはいっていません。</p>
+
+<h4>どうやって Orto で出来るの？</h4>
+
+<p>Orto では、普通のアプリケーション製作以上に、モデル・ビュー・コントロールの管理が
+きれいに出来ます。では、具体的に、Orto アプリの作り方を見ていきましょう。</p>
+
+<h5>１．HTML でデザインを作る</h5>
+
+<p>Orto アプリを作るにあたって、まず、外見から作りましょう。
+HTML で作ります。Dreamweaver のようなオーサリングツールを使っても良いです。
+この過程ではプログラミングは不要なので、デザイナーさんでも作れます。</p>
+
+<h5>２．ID 属性をつける</h5>
+
+<p>Orto では、ID 属性を目印に操作します。全部のタグに付けてもかまわないですが、
+使う可能性のあるのに限ってつけるだけでも当然かまわないです。</p>
+
+<h5>３．ビュー情報を管理するモデルを作ろう</h5>
+
+<p>表示されている情報のうち、プログラムで管理する必要がある情報が存在する場合は、
+そのモデルを作りましょう。</p>
+
+<p>ここで、ビューと今作ったモデルを結ぶので役立つのが、
+Container.getData() と Container.setData() です。</p>
+
+<p style="text-align:center"><img src="SetData.gif" width="647" height="238" alt="Container.getData()" /></p>
+
+<h5>４．サーバーに保存したり、取り出したいときは？</h5>
+
+<p>今、作ったモデルをサーバーに保存したり、保存したものを読み出したいときは、
+ObjectInputStream と ObjectOutputStream を使えば、そのまま読み書きできます。
+その時、変数を transient にしておけば、通信しません。</p>
+
+<p style="text-align:center"><img src="WriteObject.gif" width="610" height="239" alt="ObjectOutputStream.writeObject()" /></p>
+
+<h5>５．コントロールを作ろう！</h5>
+
+<p>そして、最後にコントロールを作り、全体をつなげば完成です。
+その時、HTML ファイルは、LoadableContainer.loadHTML() で読み込んで表示が出来ます。
+
+<p style="text-align:center"><img src="LoadHTML.gif" width="500" height="122" alt="LoadableContainer.loadHTML()" /></p>
+
+<p>あとは、イベントリスナーを作り、それに対する処理を作るだけです。</p>
+
+<p>いかがでしょうか。Orto では、モデル・ビュー・コントロールの管理が
+非常にきれいに出来ることがお分かりいただけたのではないでしょうか！
+ぜひプログラミングは楽して、楽しんでください。</p>
+
+</body>
+</html>

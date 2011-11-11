@@ -1,0 +1,25 @@
+body {
+	margin-left: 3%;
+	margin-right: 3%;
+	background-image: url("back.gif");
+}
+h1, h4 {
+	color: rgb(0, 94, 160);
+}
+pre {
+	background-color: #FFFFCC;
+	padding-right: 3%;
+	padding-left: 3%;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-style: solid;
+	border-width: 1px;
+}
+th {
+	background-color: rgb(232,223,149);
+}
+
+a:link { color: rgb(0, 0, 153) }
+a:visited { color: rgb(153, 0, 153) }
+a:active { color: rgb(255, 0, 102) }
+a:hover { color: rgb(0, 0, 255) }

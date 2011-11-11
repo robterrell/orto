@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Worm" default="ortoar-en" basedir=".">
+
+	<property name="ortoarJar" value="../../bin/ortoar.jar"/>
+	<property name="ortoClasses" value="../../lib/ortoClasses.jar"/>
+
+	<target name="ortoar-en">
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+
+		<!-- Creates Worm.html -->
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.worm.Worm
+				-mainHTML ../design/design-en.html
+				-language en
+				-encoding ISO-8859-1
+				-outputHTML ../Worm-en.html
+				-outputScript ../Worm-en.js
+				jp/orto/worm/*.class"/>
+		</java>
+	</target>
+
+	<target name="ortoar-ja">
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+
+		<!-- Creates Worm.html -->
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.worm.Worm
+				-mainHTML ../design/design-ja.html
+				-language ja
+				-encoding Shift_JIS
+				-outputHTML ../Worm-ja.html
+				-outputScript ../Worm-ja.js
+				jp/orto/worm/*.class"/>
+		</java>
+	</target>
+
+	<target name="compress-en">
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+
+		<!-- Creates Worm.html -->
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.worm.Worm
+				-mainHTML ../design/design-en.html
+				-language en
+				-encoding ISO-8859-1
+				-outputHTML ../Worm-en.html
+				-outputScript ../Worm-en.js
+				-compress
+				jp/orto/worm/*.class"/>
+		</java>
+	</target>
+
+	<target name="compress-ja">
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+
+		<!-- Creates Worm.html -->
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.worm.Worm
+				-mainHTML ../design/design-ja.html
+				-language ja
+				-encoding Shift_JIS
+				-outputHTML ../Worm-ja.html
+				-outputScript ../Worm-ja.js
+				-compress
+				jp/orto/worm/*.class"/>
+		</java>
+	</target>
+
+</project>

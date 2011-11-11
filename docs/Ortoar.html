@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<title>Ortoar リファレンス マニュアル</title>
+<style type="text/css">
+	body {
+		padding-right: 3%;
+		padding-left: 3%;
+		background-color: #FFFFFF;
+	}
+	h4 {
+		color: rgb(0, 92, 160);
+	}
+	th {
+		background-color: rgb(232,223,149);
+	}
+	a:link { color: rgb(0, 0, 153) }
+	a:visited { color: rgb(153, 0, 153) }
+	a:active { color: rgb(255, 0, 102) }
+	a:hover { color: rgb(0, 0, 255) }
+</style>
+</head>
+
+<body>
+<h1>Ortoar リファレンス マニュアル</h1>
+
+<h4>１．概要</h4>
+
+<p>Ortoar は</p>
+
+<ul>
+	<li>クラスファイル</li>
+	<li>VM（バーチャルマシン)</li>
+	<li>リソースファイル。Class.getResourceAsStream(String) で使用します。</li>
+</ul>
+
+<p>を束ねて、一つの HTML ファイルを生成します。</p>
+
+<h4>２．使い方</h4>
+
+<p>java -jar ortoar.jar [options] pathNames ...</p>
+
+<p>pathName にフォルダ名を指定するとそのフォルダ以下を再帰的に追加します。</p>
+
+<h4>３．オプション</h4>
+
+<table border="1" cellspacing="0" cellpadding="4" style="width: 100%;" summary="options">
+	<tr><th>引数</th><th>説明</th>
+	</tr><tr>
+		<td nowrap="nowrap" valign="top" style="width: 13em;">-main クラス名</td>
+		<td><span style="color: red;">【必須】</span>最初に実行するクラスを指定します。</td>
+	</tr><tr>
+		<td nowrap="nowrap" valign="top">-mainHTML HTMLファイル名</td>
+		<td>起動時にあらかじめ読み込む HTML ファイルを指定します。<br />
+		ここで指定するファイルは主にデザインの HTML ファイルです。<br />
+		具体的な使い方についてはチュートリアルをお読みください。</td>
+	</tr><tr>
+		<td nowrap="nowrap" valign="top">-compress</td>
+		<td>圧縮HTMLを生成します。起動が２倍遅くなります。<br />
+		Orto はWeb サーバーの gzip 圧縮と併用することを前提に作られています。<br />
+		どうしても gzip 圧縮を有効に出来ない場合に苦肉の策としてご利用ください。<br />
+		gzip 圧縮だと 1/4 になりますが、Ortoar で圧縮をかけると 1/3 程度です。</td>
+	</tr><tr>
+		<td nowrap="nowrap" valign="top">-language 言語名</td>
+		<td>言語を指定してください。日本語はja、英語はenです。</td>
+	</tr><tr>
+		<td nowrap="nowrap" valign="top">-encoding エンコーディング名</td>
+		<td>Shift_JIS などのエンコーディングを指定してください。</td>
+	</tr><tr>
+		<td nowrap="nowrap" valign="top">-scriptEmbedded</td>
+		<td>JavaScript と HTML を結合して JavaScript を埋め込みます。</td></tr>
+	</tr><tr>
+		<td nowrap="nowrap" valign="top">-outputHTML ファイル名</td>
+		<td>指定したファイル名で HTML ファイルを作成します。<br />
+		指定していない場合は -main で指定したクラス名から生成するファイル名を決めます。
+		</td></tr>
+	</tr><tr>
+		<td nowrap="nowrap" valign="top">-outputScript ファイル名</td>
+		<td>指定したファイル名で外部 JavaScript ファイルを作成します。<br />
+		指定していない場合は -main で指定したクラス名から生成するファイル名を決めます。
+		</td></tr>
+	</tr><tr>
+		<td nowrap="nowrap" valign="top">-version</td>
+		<td>Orto のバージョンを表示します。</td>
+	</tr>
+</table>
+
+<h4>４．サーバーへの配備について</h4>
+
+<p>
+Ortoar が生成する HTML ファイルを Web サーバーにアップロードするだけで、
+Orto アプリケーションは利用できますが、Web サーバーの gzip 圧縮を有効にすることを
+強くお勧めします。Orto は gzip 圧縮が有効であることを前提に作られています。
+Apache に組み込む場合は、mod_gzip を組み込み、必要な設定を行ってください。
+Microsoft IIS の場合は、gzip 圧縮を有効にするオプションがあります。
+</p>
+
+<p>
+ISP（プロバイダー）のホームページサービスを利用するなど、
+どうしても、gzip 圧縮を有効に出来ない場合は、Ortoar に -compress オプションを
+つけてください。起動は遅くなりますが圧縮 HTML を生成します。
+</p>
+
+<h4>５．例</h4>
+
+<p>MonkeyTiger.class が実行クラスの場合。MonkeyTiger.html を生成します。</p>
+<p>java -jar ortoar.jar -main MonkeyTiger MonkeyTiger.class</p>
+
+</body>
+</html>

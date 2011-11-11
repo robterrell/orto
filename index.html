@@ -1,0 +1,1318 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<link rel="next" href="docs/tutorial/index.html" type="text/html" />
+	<link rel="home" href="index.html" />
+	<link rel="author" href="mailto:support@orto.jp" />
+	<link rev="made" href="mailto:support@orto.jp" />
+	<title>Orto</title>
+<style type="text/css">
+	body {
+		padding-right: 3%;
+		padding-left: 3%;
+		background-color: #FFFFFF;
+		background-image: url("back.gif");
+	}
+	h4 {
+		color: rgb(0, 92, 160);
+		margin-top: 0px;
+	}
+	p {
+		margin-bottom: 2em;
+	}
+	p.normal {
+		margin-bottom: 0em;
+	}
+	
+	a {
+		text-decoration: none;
+		color: rgb(0, 0, 153);
+	}
+	a:hover {
+		text-decoration: underline;
+		color: rgb(0, 0, 255);
+	}
+	a:visited {
+		color: rgb(153, 0, 153);
+	}
+	a:active { 
+		color: rgb(255, 0, 102);
+	}
+
+	span.add { color: green }
+	span.fix { color: rgb(35, 86, 97) }
+	span.chg { color: rgb(237, 79, 39) }
+	span.doc { color: rgb(126, 123, 5) }
+</style>
+<script type="text/javascript">
+	function showOldList() {
+		if(document.all) {
+			document.all["oldList"].style.display = "block";
+			document.all["showListAnchor"].style.display = "none";
+		} else if(document.getElementById) {
+			document.getElementById("oldList").style.display = "block";
+			document.getElementById("showListAnchor").style.display = "none";
+		}
+	}
+</script>
+</head>
+<body>
+<div style="position: absolute; z-index: 1; left: 2em; top: 1em;">[ <a href="http://orto-lang.com/">English</a> ][ Japanese ]</div>
+<table width="100%" summary="base">
+	<tr> 
+		<td colspan="3" height="100" align="center">
+			<span style="font-family:'Times New Roman', selif;font-size:300%; color:black">ORTO</span>
+		</td>
+	</tr>
+
+	<tr>
+		<td width="20%" valign="top"> 
+			<table cellpadding="3" cellspacing="0" summary="menu"
+					style="border-width: 2px; border-style:solid; border-color:#333399;">
+				<tr>
+					<td style="background-color:#FFFFCC; text-align:center"><strong>メニュー</strong></td>
+				</tr><tr> 
+					<td>
+						<table width="100%" summary="menuInner">
+							<tr>
+								<td colspan="2">サンプル</td>
+							</tr><tr>
+								<td width="10%"></td>
+								<td><a href="samples/Xetris/Xetris-ja.html">Xetris</a></td>
+							</tr><tr>
+								<td width="10%"></td>
+								<td><a href="samples/PictureViewer/PictureViewer-ja.html">Picture Viewer</a></td>
+							</tr><tr>
+								<td width="10%"></td>
+								<td><a href="samples/Pop-UpNote/PopUpNote-ja.html">付箋</a></td>
+							</tr><tr>
+								<td width="10%"></td>
+								<td><a href="samples/MonkeyTiger/MonkeyTiger-ja.html">サルトラ算(24KB)</a></td>
+							</tr><tr>
+								<td width="10%"></td>
+								<td><a href="samples/Worm/Worm-ja.html">みみず君(25KB)</a></td>
+							</tr><tr>
+								<td width="10%"></td>
+								<td><a href="http://orto.jp/SampleBoard/SampleBoard.html">プログラム掲示板</a></td>
+							</tr><tr>
+								<td colspan="2"><a href="docs/tutorial/index.html">チュートリアル</a></td>
+							</tr><tr>
+								<td colspan="2">Orto SDK (2MB)</td>
+							</tr><tr>
+								<td width="10%"></td>
+								<td><a href="http://orto.jp/archive/orto132ja.exe">Windows 版</a></td>
+							</tr><tr>
+								<td width="10%"></td>
+								<td><a href="http://orto.jp/archive/orto132ja.zip">ZIP 版 (Linux など)</a></td>
+							</tr><tr>
+								<td colspan="2">リファレンス</td>
+							</tr><tr>
+								<td width="10%"></td>
+								<td><a href="docs/client/index.html">クライアント</a></td>
+							</tr><tr>
+								<td width="10%"></td>
+								<td><a href="docs/servlet/index.html">Servlet</a></td>
+							</tr><tr>
+								<td width="10%"></td>
+								<td><a href="docs/PHP/index.html">PHP</a></td>
+							</tr><tr>
+								<td width="10%"></td>
+								<td><a href="docs/perl/index.html">Perl</a></td>
+							</tr><tr>
+							  <td colspan="2"><a href="http://orto.jp/ml/">メーリングリスト</a></td>
+<!--							</tr><tr>
+								<td colspan="2"><a href="http://orto.jp/c-board/c-board.cgi">掲示板</a></td>
+							</tr><tr>
+							  <td colspan="2"><a href="http://orto.jp/versionUpMail.html">メールマガジン</a></td>
+-->
+							</tr><tr>
+								<td colspan="2"><hr /></td>
+							</tr><tr>
+								<td colspan="2">
+									<a href="http://orto.jp/mozilla-domref-ja/index.html">Gecko DOM リファレンス（和訳）</a><br />
+									<a href="http://www.mozilla.gr.jp/jt/"><img src="yattemasu.gif" width="88" height="31" alt="やってます" /></a>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+		<td width="5%"></td>
+		<td height="100%" valign="top">
+			<table width="100%" summary="info">
+				<tr>
+					<td>
+						<h4>Orto で楽して、楽しもう！</h4>
+						<p class="normal">Orto はプラグイン無しでブラウザ上で動く Java 風言語です。 <br />
+						何でプラグインがいらないって？それは、Dynamic HTML を利用しているからです。
+						</p>
+						<p class="normal">もし、こんなことでお困りでしたら、ぜひお試しください。</p>
+					 	<ul>
+					 		<li>Servlet/JSP, PHP のアプリは使い勝手やユーザインタフェイスが悪い</li>
+							<li>Servlet/JSP, PHP は開発効率が悪い</li>
+						</ul>
+
+						<h4>対応ブラウザ</h4>
+						<p>Internet Explorer 4 以降、Netscape 6 以降、Mozilla、Opera 7 以降で動きます。</p>
+
+						<h4>What's New</h4>
+						<table width="100%" cellpadding="0" cellspacing="0" summary="news">
+							<tr>
+								<td width="15%" nowrap="nowrap">2003/04/16&nbsp;&nbsp;</td>
+								<td>Ver. 1.32 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="chg">【仕様変更】</span>
+										Orto SDK のライセンスを 1.30, 1.31 で一時変更していたのですが、
+										元に戻しました。Java SDK や .NET SDK 同様、無料で全機能お使いになれます。
+										Pro 版, Personal 版の区別は廃止しました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										Opera7 でも通信ができるようになりました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										Container.createImageLabel() を追加しました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										IFrame, ImageLabel, ImageButton に isLoadCompleted() と waitForLoadComplete() を追加しました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										orto.ui.Graphics を追加しました。
+										Body.getGraphics(), LoadableContainer.getGraphics() から Graphics の
+										インスタンスを取得できます。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										Browser.getBaseUrl() を追加しました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										IFrame に setFrameBorderVisible() と isFrameBorderVisible() を追加しました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										Component に borderColor, borderStyle, borderWidth の getter/setter を追加しました。
+										</li>
+										<li><span class="fix">【バグ修正】</span>
+										IFrame 内にコンポーネントを作成するのが正常に動作していなかったのを修正しました。
+										</li>
+										<li><span class="fix">【バグ修正】</span>
+										Math の pow(), atan2() が正常に動作していなかったのを修正しました。
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/03/26&nbsp;&nbsp;</td>
+								<td>Ver. 1.31 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="add">【機能追加】</span>
+										Ortoar に -outputHTML と -outputScript を追加しました。
+										出力するファイル名を指定できます。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/Container.html#getChild(java.lang.String)">
+										Container.getChild()
+										</a> を public にしました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/java/lang/String.html#escape()">String.escape()</a> と
+										<a href="docs/client/java/lang/String.html#unescape()">String.unescape()</a> を
+										追加しました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/Browser.html#getCookieString()">Browser.getCookieString()</a> と
+										<a href="docs/client/orto/ui/Browser.html#setCookieString(java.lang.String)">
+											Browser.setCookieString()</a> を
+										追加しました。
+										クッキーを操作できます。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/ImageLabel.html">ImageLabel</a> に
+										LoadListener を登録できるようになりました。
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/03/24&nbsp;&nbsp;</td>
+								<td>Ver. 1.30 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>皆様、大変お久しぶりでございます。
+										長いことホームページの更新を止めていましたが、
+										本日から再開させていただきます。
+										今後とも、なにぞとよろしくお願いいたします。</li>
+										<li><span class="chg">【仕様変更】</span>
+										Personal 版と Professional 版に分離しました。<br />
+										Personal 版のみを一般公開します。
+										Personal 版は以下の制限があります。
+										<ol>
+										<li>営利目的・法人団体の利用を禁止しております。</li>
+										<li>サーブレットとの接続が出来ないです。</li>
+										</ol>
+										よろしくお願いいたします。
+										Professional 版をご利用になりたい方は、
+										<a href="mailto:support@orto.jp">support@orto.jp</a> まで
+										ご連絡ください。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										無圧縮版の起動が劇的に速くなりました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										（Pro 版のみ）
+										<a href="docs/client/orto/net/HTMLSocket.html">HTMLSocket</a>
+										を追加しました。これにより、擬似的にソケット通信が出来るようになり、
+										サーバーからの情報の Push ができるようになりました。
+										</li>
+										<li><span class="chg">【仕様変更】</span>
+										Ortoar が生成する HTML が HTML と JavaScript を分離できるようになりました。
+										また、分離する形態を標準とさせていただきます。
+										従来どおり埋め込みスクリプトを使いたい場合は、-scriptEmbedded オプションをつけてください。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/java/io/PipedInputStream.html">
+										PipedInputStream</a> と 
+										<a href="docs/client/java/io/PipedOutputStream.html">
+										PipedOutputStream</a>
+										を追加しました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										Component にクリッピング関係のメソッドを追加しました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										ImageLabel.setAlphaImage() を追加しました。
+										アルファチャンネルを持つ PNG 画像を扱いたいときにご利用ください。
+										</li>
+										<li><span class="fix">【バグ修正】</span>
+										Base64 に不正な引数を渡したときに例外を投げるようにしました。
+										</li>
+										<li><span class="fix">【バグ修正】</span>
+										圧縮 HTML が正常に圧縮できない場合があったバグを修正しました。
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/02/13&nbsp;&nbsp;</td>
+								<td>Ver. 1.25 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="chg">【仕様変更】</span>
+										<a href="docs/client/orto/ui/ComponentListener#ON_CLICK">
+										マウスイベントの param の仕様</a>を変更しました。
+										X, Y 座標の取り方が変更になっています。
+										1.20 で仕様を作り、1.23 で変更し、コンバージョンで再々変更です。
+										これで Fix であると信じ、強く祈っております。
+										また、マウスイベント関係のバグを大量に修正しました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/Component.html#getXFromBody()">
+										Component.getXFromBody()</a> と 
+										<a href="docs/client/orto/ui/Component.html#getYFromBody()">
+										getYFromBody()</a>
+										を追加しました。
+										</li>
+										<li><span class="fix">【バグ修正】</span>
+										ドラッグの質が非常に向上しました。
+										サンプルの
+										<a href="samples/Pop-UpNote/PopUpNote-ja.html">付箋</a>
+										をご覧ください。
+										</li>
+										<li><span class="doc">【例・文章】</span>
+										サンプルのコメントをすべて英語にしました。
+										また、
+										<a href="http://orto-lang.com/samples/Pop-UpNote/PopUpNote-en.html">付箋の英語版</a>
+										を作りました。
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/02/11&nbsp;&nbsp;</td>
+								<td>英語版メーリングリスト開始</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><a href="http://orto-lang.com/ml/">英語版のメーリングリスト</a>を始めました。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/02/10&nbsp;&nbsp;</td>
+								<td>Ver. 1.24 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="doc">【例・文章】</span>
+										<a href="samples/PictureViewer/PictureViewer-ja.html">Picture Viewer</a>
+										というサンプルを追加しました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/IFrame.html#getInnerWidth()">IFrame.getInnerWidth()</a> と 
+										<a href="docs/client/orto/ui/IFrame.html#getInnerHeight()">IFrame.getInnerHeight()</a>
+										を追加しました。
+										</li>
+										<li><span class="fix">【バグ修正】</span>
+										top 属性と left 属性を設定してないと正しくマウスの位置を Netscape で取得できなかったバグを
+										修正しました。
+										IFRAME の中のイベントを IE で取得できないバグを修正しました。
+										IE でスクロールの分をマウスの位置に加えていなかったバグを修正しました。
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/02/09&nbsp;&nbsp;</td>
+								<td>Ver. 1.23 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>英語版の SDK をリリースしました。</li>
+										<li><span class="doc">【例・文章】</span>
+										<a href="samples/Pop-UpNote/PopUpNote-ja.html">付箋</a>
+										というサンプルを追加しました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										-language と -encoding オプションが
+										<a href="docs/Ortoar.html">Ortoar</a>
+										に追加されました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										ドラッグ関係の機能を追加しました。
+										Component.setDragable(), getDragable() をご利用ください。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										Window にマウス関係のイベントリスナーを追加しました。
+										</li>
+										<li><span class="fix">【バグ修正】</span>
+										Ver. 1.20 で変更したマウスイベント関係がめちゃくちゃだったので、
+										いろいろバグを取りました。仕様も若干変更しています。
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/02/05&nbsp;&nbsp;</td>
+								<td>Ver. 1.22 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="fix">【バグ修正】</span>
+										1.20 でマウスのイベント処理を書き換えたとき、誤って onLoad の処理も書き換えて
+										しまっていて、通信が出来なくなっていたバグを修正しました。
+										（Thanks 紀平）
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/02/04&nbsp;&nbsp;</td>
+								<td>Ver. 1.21 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="fix">【バグ修正】</span>
+										synchronized 関数を呼び出し、その関数が本当にロックの競合が起こしているとき、
+										あとでそのロックがフリーになっても、スレッドは再開するけど、
+										関数が呼び出されていなかったバグを修正。
+										普通の synchronized 文は正常に動いていました。
+										（Thanks 紀平）
+										</li>
+										<li><span class="doc">【例・文章】</span>
+										Xetris では下キーを押すとブロックが高速に落ちていくのですが、
+										IE ではその途中経過が見れないので、少々ロジックを改造しました。
+										それに加えてラインを消す前にも少々待ちを入れて、
+										「消すんだよ」というのがユーザーに見えるようになりました。
+										生成するクラスが変化しているので、前のバージョンに上書きしている方は
+										事前にクラスを消してから、Java コンパイラを動かしてください。
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/02/02&nbsp;&nbsp;</td>
+								<td>Ver. 1.20 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="add">【機能追加】</span>
+										マウス系のイベントでマウスカーソルの位置と
+										Shift, Ctrl, Alt キーが押されているかどうか取得できるようになりました。
+										componentAction() の param に渡されます。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/Window.html#getInnerWidth()">Window.getInnerWidth()</a>,
+										<a href="docs/client/orto/ui/Window.html#getInnerHeight()">Window.getInnerHeight()</a>
+										を追加しました。
+										ウィンドウ内のコンテンツを表示する領域のうち、スクロールバーを除いた領域の
+										幅と高さを返します。
+										（Thanks 紀平）
+										</li>
+										<li><span class="fix">【バグ修正】</span>
+										サンプルに readme-jp.html をつけると共に、
+										内容がめちゃくちゃだったのを修正。
+										（Thanks まこたんさん）
+										</li>
+										<li><span class="fix">【バグ修正】</span>
+										IFrame.loadHTML(htmlFile) が正常に動作していなかったバグを修正。
+										（Thanks 紀平）
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/31&nbsp;&nbsp;</td>
+								<td>Ver. 1.19 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="chg">【仕様変更】</span>
+										Ortoar の生成する HTML ファイルは「無圧縮」を標準にしました。
+										従来は -nocompress オプションをつけた時に「無圧縮 HTML」を生成していたのですが、
+										これからは、-compress をつけた時に初めて「圧縮 HTML」になるようにします。
+										今の Orto は mod_gzip などの Web サーバーの gzip 圧縮を有効にしていることを
+										前提に作られています。
+										「無圧縮 HTML」を Ortoar で作り、
+										Web サーバー側で圧縮させてください。この方が圧縮率も格段に高いし、
+										Orto アプリの起動時間も全然速くなります。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/Browser.html#createChildWindowFrom(java.lang.String)">
+										Browser.createChildWindowFrom(url)</a>
+										を追加しました。
+										子ウィンドウを作成するときに同時にデザインも指定したいときにこの url に
+										design.html などを渡してください。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										Container.getData() が Select, CheckBox に対応しました。
+										また、Container.setData() が CheckBox に対応しました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										Container.setData() で getter を必要としますが、
+										boolean の getter の時は、getAbc() の形式だけでなく、isAbc() の形式でも OK になりました。
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/30&nbsp;&nbsp;</td>
+								<td>Ver. 1.18 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/Container.html#getData(java.lang.Object)">Container.getData()</a>
+										を追加しました。
+										</li>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/ImageButton.html#getImage()">ImageButton.getImage()</a>, 
+										<a href="docs/client/orto/ui/ImageLabel.html#getImage()">ImageLabel.getImage()</a>
+										を追加しました。
+										</li>
+										<li><span class="fix">【バグ修正】</span>
+										Component.setImage() 関数が public 属性になっていた勘違いを修正。
+										ImageButton.setImage(), ImageLabel.setImage() を通して呼び出してください。
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/29&nbsp;&nbsp;</td>
+								<td>Ver. 1.17 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="fix">【バグ修正】</span>
+										コンポーネントを取得したり、Container.setData() を呼び出すときに、
+										IFrame の中ものぞけるようになりました。
+										</li>
+										<li><span class="doc">【例・文章】</span>
+										チュートリアルを改良しました。
+										特に、
+										<a href="docs/tutorial/GUI/MonkeyTiger.html">サルトラ算の説明</a>
+										がかなり良くなっています。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/28&nbsp;&nbsp;</td>
+								<td>英語版ホームページ</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><a href="http://orto-lang.com/">英語版ホームページ</a>を作りました。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/23&nbsp;&nbsp;</td>
+								<td>メーリングリスト開始</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>orto.jp を新サーバーに移行させました。それと同時に、
+										掲示板とメールマガジンを廃止し、
+										<a href="/ml/">メーリングリスト</a>を開始しました。
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/22&nbsp;&nbsp;</td>
+								<td>Ver. 1.16 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="doc">【例・文章】</span>
+										紀平氏が
+										<a href="samples/Xetris/Xetris-ja.html">Xetris</a> を作ってくださいました。
+										非常に完成度が高いです。ぜひ、遊んで楽しんでください。
+										ソースも付いています。
+										</li>
+										<li><span class="fix">【バグ修正】</span>
+										イベントが連続すると CPU の使用率が 100% になるバグ修正。
+										このバグを修正したことにより普段の CPU 使用率も下がりました。
+										（Thanks 紀平）
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/21&nbsp;&nbsp;</td>
+								<td>Ver. 1.15 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/Component.html#setPositioningScheme(java.lang.String)">
+										Component.setPositioningScheme()</a>,
+										<a href="docs/client/orto/ui/Component.html#getPositioningScheme()">
+										getPositioningScheme()</a> を追加しました。
+										また、getX(), getY(), move() でちゃんと left 属性、top 属性を設定していないときは、
+										<a href="docs/client/orto/ui/UIException.html">UIException</a>
+										を投げるようにしました。(Thanks 紀平）
+										</li>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/Component.html#setLocation(java.lang.String, java.lang.String)">
+										Component.setLocation(String, String)</a> を追加しました。
+										ピクセル以外の単位で指定したい場合にご利用ください。</li>
+										<li><span class="add">【機能追加】</span>
+										Component に
+										<a href="docs/client/orto/ui/Component.html#setRelativeLocation(int, int)">
+										setRelativeLocation()</a>,
+										getDx(), getDy() を追加しました。
+										position 属性が relative の時はこちらをお使いください。
+										ボタンを振動させたいときなどに使えます。</li>
+										<li><span class="doc">【例・文章】</span>
+										一連の position 系の修正を行ったのに関連して、
+										<a href="docs/client/orto/ui/Panel.html#clone()">Panel.clone()</a>
+										のコピーする内容を明確化しました。コピーする内容も若干増えています。</li>
+										<li><span class="fix">【バグ修正】</span>
+										<a href="docs/client/orto/ui/Component.html#getParent()">Component.getParent()</a>
+										で ちゃんと
+										<a href="docs/client/orto/ui/UIException.html">UIException</a>
+										を投げない場合があったバグを修正。
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/19&nbsp;&nbsp;</td>
+								<td>Ver. 1.14 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="fix">【バグ修正】</span>
+										<a href="docs/client/orto/ui/Body.html">Body</a> 直下の
+										<a href="docs/client/orto/ui/Panel.html#clone()">Panel.clone()</a> を呼び出すと、
+										<a href="docs/client/java/lang/ClassCastException.html">ClassCastException</a>
+										が発生していたバグを修正。(Thanks 紀平）
+										</li>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/UIException.html">UIException</a>
+										を追加しました。
+										<a href="docs/client/orto/ui/Container.html">Container</a>
+										などで使われています。
+										<a href="docs/client/java/lang/RuntimeException.html">RuntimeException</a>
+										を継承したクラスなのでプログラムを変更する必要はありません。
+										</li>
+										<li><span class="doc">【例・文章】</span>
+										<a href="docs/Ortoar.html">Ortoar リファレンス マニュアル</a> を書きました。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/16&nbsp;&nbsp;</td>
+								<td>Ver. 1.13 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="fix">【バグ修正】</span>
+										イベントとスレッド関係のバグ修正。
+										これにより、起動時に使われる一番最初のスレッドでは通信ができなくなっていたバグを修正。<br />
+										1.06 ～ 1.12までは、スレッドを作れば通信ができていました。
+										1.04 でイベント処理を変更し、1.06 で再修正してからこのバグが入り込んでいたようです。<br />
+										ちなみに、
+										<a href="										docs/client/orto/ui/ComponentListener.html#componentAction(orto.ui.Component, int, int)">componentAction()</a>
+										から通信などができないのは仕様です。</li>
+										<li><span class="fix">【バグ修正】</span>
+										IE で子ウィンドウの IFrame を操作できなかったバグを修正。</li>
+										<li><span class="fix">【バグ修正】</span>
+										<a href="docs/client/orto/ui/LoadableContainer.html#createIFrame()">createIFrame()</a>
+										の作成した IFRAME の初期化が完了する前に
+										<a href="docs/client/orto/ui/LoadableContainer.html#setHTML(java.lang.String)">setHTML()</a>
+										を呼び出した場合、後で内容が消されてしまうのを修正するべく、
+										<a href="docs/client/orto/ui/LoadableContainer.html#createIFrame()">createIFrame()</a>
+										で初期化が完了済みかチェックすることにしました。<br />
+										それにより、
+										<a href="docs/client/orto/ui/LoadableContainer.html#createIFrame()">createIFrame()</a>
+										は、スレッド処理を必要とするようになり、
+										<a href="										docs/client/orto/ui/ComponentListener.html#componentAction(orto.ui.Component, int, int)">componentAction()</a>
+										から呼び出す場合はスレッドを作ってください。
+										</li>
+										<li><span class="fix">【バグ修正】</span>
+										実行上問題は無かったのですが、
+										PHP ライブラリが Broken HTML を生成するバグを修正しました。
+										DOCTYPE がないので、今でもおかしいといえばおかしいですが、
+										なんら問題を生じないので、お許しください。
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/15&nbsp;&nbsp;</td>
+								<td>Ver. 1.12 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="add">【機能追加】</span>
+										PHP ライブラリを作りました。
+										Orto ⇔ PHP 4 間の通信ができます。
+										ドキュメントは<a href="docs/PHP/index.html">こちら</a>。</li>
+										<li><span class="add">【機能追加】</span>
+										IFrame に
+										<a href="docs/client/orto/ui/IFrame.html#getScrolling()">getScrolling()</a>,
+										<a href="docs/client/orto/ui/IFrame.html#setScrolling(java.lang.String)">setScrolling(String)</a>
+										を追加しました。スクロールバーを表示するかどうか設定できます。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/14&nbsp;&nbsp;</td>
+								<td>Ver. 1.11 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/Window.html">orto.ui.Window</a>,
+										<a href="docs/client/orto/ui/IFrame.html">orto.ui.IFrame</a>
+										にスクロール関係の機能を追加しました。</li>
+										<li><span class="add">【機能追加】</span>
+										印刷ができるようになりました。
+										<a href="docs/client/orto/ui/Window.html#print()">Window.print()</a>,
+										<a href="docs/client/orto/ui/IFrame.html#print()">IFrame.print()</a>
+										を呼び出してください。</li>
+										<li><span class="fix">【バグ修正】</span>
+										<a href="docs/client/orto/ui/IFrame.html#setHTML(java.lang.String)">IFrame.setHTML(String)</a>
+										のバグ修正。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/13&nbsp;&nbsp;</td>
+								<td>Ver. 1.10 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="add">【機能追加】</span>
+										<a href="docs/client/orto/ui/Window.html">orto.ui.Window</a> を追加しました。
+										これにより子ウィンドウが開けるようになりました。
+										そのため、
+										<a href="docs/client/orto/ui/DocumentRoot.html">orto.ui.DocumentRoot</a> は不要になったので、
+										<a href="docs/client/orto/ui/Browser.html#getMainWindow()">Browser.getMainWindow()</a> 
+										に置き換えてください。その方が分かりやすいというのも理由の一つです。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/10&nbsp;&nbsp;</td>
+								<td>Ver. 1.06 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="doc">【例・文章】</span>
+										<a href="docs/perl/index.html">Perl ライブラリのドキュメント</a>を書きました。
+										また、base64.pl を orto.pl に組み込みました。</li>
+										<li><span class="fix">【バグ修正】</span>
+										イベント発生時にエラーが生じる現象を修正しました。</li>
+										<li><span class="fix">【バグ修正】</span>
+										long 型のビットシフトのバグ修正。</li>
+										<li><span class="fix">【バグ修正】</span>
+										orto.pl の readLong() が負の数を正常に取り扱えなかったバグ修正。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/05&nbsp;&nbsp;</td>
+								<td>Ver. 1.05 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="add">【機能追加】</span>
+										Orto ⇔ Perl で通信できるようになりました。perl フォルダにライブラリが入っています。
+										しかし、まだドキュメントが存在しません。</li>
+										<li><span class="fix">【バグ修正】</span>
+										UTF-16 → UTF-8 の変換ルーチンで正常に変換できない文字がありました。
+										ごめんなさい。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/04&nbsp;&nbsp;</td>
+								<td>Ver. 1.04 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="add">【機能追加】</span>
+										componentAction() にて、false を返すと、イベントに対するデフォルトの処理が
+										キャンセルされるようになりました。
+										ただし、Mozilla ではほとんどキャンセルされません。原因を調査中です。</li>
+										<li><span class="fix">【バグ修正】</span>
+										イベントが発生したときにすぐに反応するようになりました。
+										ただし、前から wait() などはできなかったですが、
+										あらゆるスレッド関係の処理が componentAction() で出来なくなりました。
+										sleep() などを行いたいときは、スレッドを作ってから行ってください。</li>
+										<li><span class="fix">【バグ修正】</span>
+										Mozilla で例外メッセージを出すときにタグがそのまま見えていたのを修正しました。
+										同時に、Browser.trace() にて、タグを使えなくなりました。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/03&nbsp;&nbsp;</td>
+								<td>Ver. 1.03 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="add">【機能追加】</span>
+										System.getProperty(String) を追加しました。</li>
+										<li><span class="fix">【バグ修正】</span>
+										例外をキャッチできない場合があったバグを修正しました。</li>
+										<li><span class="fix">【バグ修正】</span>
+										長い間悩んできた switch 暴走バグの原因が分かり、解決しました。</li>
+										<li><span class="fix">【バグ修正】</span>
+										System.arraycopy() のコピー中に型キャストできないのが見つかったときに、
+										そこで中断して、例外を投げるように修正。</li>
+										<li><span class="fix">【バグ修正】</span>
+										System.arraycopy() への不正な引数チェックを仕様通りに修正。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/02&nbsp;&nbsp;</td>
+								<td>Ver. 1.02 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="add">【機能追加】</span>
+										Class.getResourceAsStream(String), getResourceAsArray(String) を実装しました。</li>
+										<li><span class="add">【機能追加】</span>
+										Math の sin() などを実装しました。</li>
+										<li><span class="add">【機能追加】</span>
+										System.exit(), Runtime.exit() を追加しました。</li>
+										<li><span class="fix">【バグ修正】</span>
+										String(byte[], int, int) で不正な値を入力していたときに、
+										IE で暴走していたバグを修正。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2003/01/01&nbsp;&nbsp;</td>
+								<td>Ver. 1.01 リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="chg">【仕様変更】</span>
+										RadioButton を Button ではなく、CheckBox を継承するように変更しました。
+										これは完全にミスです。ごめんなさい。</li>
+										<li><span class="add">【機能追加】</span>
+										CheckBox に checked, enabled の getter/setter を追加しました。</li>
+										<li><span class="add">【機能追加】</span>
+										TextBox, Select に Change 系のイベントリスナーを追加しました。</li>
+										<li><span class="add">【機能追加】</span>
+										Select に rows の getter/setter を追加しました。</li>
+										<li><span class="add">【機能追加】</span>
+										java.util.Date を追加しました。</li>
+										<li><span class="add">【機能追加】</span>
+										Vector(Vector) のコンストラクタを追加しました。</li>
+										<li><span class="fix">【バグ修正】</span>
+										Random の nextLong, nextFloat, nextDouble をちゃんと実装しました。</li>
+										<li><span class="fix">【バグ修正】</span>
+										Runnable が正常に動作しなくなっていたのを修正しました。</li>
+										<li><span class="fix">【バグ修正】</span>
+										要素に null を含んでいる時 Vector.toString() が NullPointerException を
+										生成していたバグを修正。</li>
+										<li><span class="fix">【バグ修正】</span>
+										Vector.lastIndexOf(), copyInto(), trimToSize(), insertElementAt(), removeAllElements(), removeElementAt(), setSize() をちゃんと実装。</li>
+										<li><span class="fix">【バグ修正】</span>
+										ArrayIndexOutOfBoundsException が正常にクラスロードされないバグを修正。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2002/12/31&nbsp;&nbsp;</td>
+								<td>Ver. 1.00（正式版） リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><span class="chg">【仕様変更】</span>
+										HTML 生成プログラムを Oar から Ortoar に名称変更しました。
+										名前の由来は Orto Archiver です。</li>
+										<li><span class="chg">【仕様変更】</span>
+										ComponentListener.componentAction() が戻り値を必要とするようになりした。
+										現在では意味を持っていないのですが必ず true を返すようにしてください。
+										将来のバージョンでは false を返すようにするとイベントプロパゲーションをしないようにします。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2002/12/30&nbsp;&nbsp;</td>
+								<td>Ver. 0.99 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>long, float, double 対応。</li>
+										<li>２つ前のバージョンから null instanceof Something が
+										正常に処理していなかったのを修正。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2002/12/26&nbsp;&nbsp;</td>
+								<td>Ver. 0.98 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>ListBox を ListBox, Select, RadioButton に分離しました。
+										iアプリ と同じ方法を踏襲するのは無理と分かったので、やめました。</li>
+										<li>Component に blur(), click() を追加しました。</li>
+										<li>Component に cursor, textDecoration, zIndex の getter/setter を追加しました。</li>
+										<li>orto.ui で、setter はあるのに、getter がない場合に、関数を追加しました。</li>
+										<li><a href="http://jarg.sourceforge.net/">jarg</a> が不要になったので、切り離しました。
+										永い間ありがとうございました。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2002/12/25&nbsp;&nbsp;</td>
+								<td>Ver. 0.97 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>クラスロードにかかる時間がほぼ０になり、起動・動作速度が速くなりました。</li>
+										<li>生成する HTML ファイルが３割減になりました。</li>
+										<li>Container.setData() はオブジェクトの変数を読むのではなく、getter 関数を経由して、
+										オブジェクトの状態を読み込むように変更しました。</li>
+										<li>スーパークラスの呼び出しなど細かいバグ修正。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2002/12/13&nbsp;&nbsp;</td>
+								<td>Ver. 0.96 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>Object, Class, Byte, Boolean, ByteArrayInputStream, ByteArrayOutputStream を Mauve にかけました。Class はいろいろとバグフィックスしました。</li>
+										<li>存在しない関数に対する呼び出しがあると Oar が無限ループに陥るバグを修正。その他、Oar の処理速度向上。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2002/12/12&nbsp;&nbsp;</td>
+								<td>Ver. 0.95 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>フィールドアクセスを改良しました。クラスローディング大改造の下準備です。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2002/12/11&nbsp;&nbsp;</td>
+								<td>Ver. 0.94 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>Oar の格納パスにフォルダ名を指定できるようになりました。
+										フォルダ名を指定すると再帰的にそのフォルダ内のファイルを格納します。</li>
+										<li>Oar の生成する HTML ファイルが少し小さくなり、生成スピードが少し速くなりました。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2002/12/10&nbsp;&nbsp;</td>
+								<td>Ver. 0.93 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li><a href="http://sources.redhat.com/mauve/">Mauve</a>
+										（Java クラスライブラリテスト）を導入しました。
+										Integer, String, StringBuffer はテストに通過するようになりました。
+										その過程で以下のバグを取りました。</li>
+										<li>ビット落ちの型キャストを仕様どおりにしました。</li>
+										<li>String(char[]), String.compareTo(), String.trim(), String.lastIndexOf(), String.valueOf(char)
+										が正常に動くようになりました。</li>
+										<li>StringBuffer は setLength(), reverse(), insert() が正常に動くようになりました。</li>
+										<li>他、細かいところを多数修正しました。</li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+						<a href="javascript:showOldList()" id="showListAnchor" name="showListAnchor">過去の分をすべて表示する</a>
+						<div id="oldList" style="display:none">
+						<table>
+							<tr>
+								<td width="15%" nowrap="nowrap">2002/12/09&nbsp;&nbsp;</td>
+								<td>Ver. 0.92 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>フィールドアクセスロジックを変更しました。それにより、シャドー変数が使えるようになりました。また、動作も高速化しました。</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2002/12/04&nbsp;&nbsp;</td>
+								<td>Ver. 0.91 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>起動が３倍速くなりました。</li>
+										<li>Oar で -nocompress オプションを作りました。この方が起動が２倍速いです。
+										こちらを使う場合は、Web サーバーの gzip 圧縮モジュールと併用することをお勧めします。
+										orto.jp ではこちらを使っています。Oar のデフォルトは圧縮 HTML です。
+										</li>
+									</ol>
+								</td>
+							</tr><tr>
+								<td width="15%" nowrap="nowrap">2002/11/21&nbsp;&nbsp;</td>
+								<td>Ver. 0.90 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>サンプルに「みみず君」を追加しました。</li>
+										<li>キー系のイベントリスナーを追加しました。</li>
+										<li>i-- や i -= 2 が実は使えなかったバグを修正。
+										こんな基本的なバグがまだ残っていてごめんなさい。
+										i-- を i += 255 として処理していました。</li>
+										<li>Vector.removeElementAt(0) が正常に使えなかったバグ修正。
+										取り除き先が1以上の場合は 0.89 でも動いていました。</li>
+										<li>Component.setSize(int,int), getWidth(), getHeight() を実装しました。
+										実装し忘れていました。</li>
+										<li>待ちタイマーがちょうど２つの時、１つが消えてしまうバグ修正。
+										これにより、200ms 以上スリープできないバグを修正しました。</li>
+ 									</ol>
+								</td>
+							</tr>
+							<tr>
+								<td width="15%" nowrap="nowrap">2002/11/19&nbsp;&nbsp;</td>
+								<td>Ver. 0.89 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>ObjectOutputStream.writeLongUTF(), ObjectInputStream.readLongUTF() を追加しました。
+										64KB 以上の文字列を読み書きするための関数です。また、writeObject() でも、
+										writeUTF() ではなく、writeLongUTF() を使うようにしました。</li>
+										<li>IE 5.1 on MacOS 9.1 での起動を 200 倍高速化しました。</li>
+										<li>Unicode → UTF-8 の変換を劇的に高速化しました。
+										それゆえ、プログラム掲示板でのソース表示が特に IE で劇的に速くなりました。</li>
+										<li>ネイティブメソッドの呼び出しを６倍高速化しました。</li>
+										<li>ByteArrayInputStream.read() と、DataInputStream.readInt() を
+										ネイティブで書き直しました。これだけで、プログラム掲示板の起動が１割速くなりました。</li>
+ 									</ol>
+								</td>
+							</tr>
+							<tr>
+								<td width="15%" nowrap="nowrap">2002/11/17&nbsp;&nbsp;</td>
+								<td>Ver. 0.88 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>oar に -mainHTML オプションを追加しました。
+										これにより、VM が起動する前から、ページの表示が可能になりました。</li>
+ 									</ol>
+								</td>
+							</tr>
+							<tr>
+								<td width="15%">2002/11/15</td>
+								<td>Ver. 0.87 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>プログラム掲示板のサルトラ算へのリンクが間違っていたバグを修正。
+										goji さんありがとうございました。</li>
+										<li>処理を高速化しました。空ループの計測で、IE, Netscape 共に速度が２倍になりました。
+										しかし、実際のアプリでは、DOM の処理が全時間のほとんどを占めているようなので、
+										ほとんど効果が出ていません。</li>
+										<li>Opera 対応を強化しました。</li>
+ 									</ol>
+								</td>
+							</tr>
+							<tr>
+								<td width="15%">2002/11/14</td>
+								<td>Ver. 0.86 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>チュートリアルが倍増しました。</li>
+										<li>I/O 関係の javadoc を書きました。</li>
+ 									</ol>
+								</td>
+							</tr>
+							<tr>
+								<td width="15%">2002/11/12</td>
+								<td>Ver. 0.85 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>サンプルにプログラム掲示板をつけました。<br />
+												IE 版が Netscape 版に比べてかなり遅くなってしまいました。
+										</li>
+										<li>Windows 版のインストーラ付きを作りました。</li>
+										<li>大量のバグフィックス。</li>
+									</ol>
+								</td>
+							</tr>
+							<tr>
+								<td width="15%">2002/11/08</td>
+								<td>Ver. 0.84 β リリース</td>
+							</tr><tr>
+								<td></td>
+								<td>
+									<ol>
+										<li>Table, TableRow は Container を継承し、Containerを継承したBodyを作りました。
+												さらに、createPanel系はContainerからBodyとLoadableContainerに移しました。
+												基本的に出来る事が増えているだけなのですが、たびたび変更して申し訳ございません。</li>
+										<li>AnchorButton に setHref() を追加しました。</li>
+										<li>イベント処理のバグ修正。</li>
+										<li>ObjectStreamのバグ修正。やっと、使い物になりました。</li>
+									</ol>
+								</td>
+							</tr>
+							<tr>
+            <td width="15%">2002/11/07</td>
+            <td>Ver. 0.83 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><ol>
+            <li>DocumentRoot.getBody()はContainerを返すことにしました。
+            		さらに、Containerを継承した、LoadableContainerを作り、
+            		AnchorButton, Form, IFrame, Panel, Span, TableCell はこちらを継承することにしました。</li>
+            <li>Container.setData(Object) を追加しました。一発で内容をセットできる、超楽チン関数です。
+            		詳しいことは、javadocをみてください。</li>
+            <li>Container.createPanelFrom(Panel) を追加しました。以上２つは表を操作するために作りました。</li>
+						</ol>
+            </td>
+          </tr>
+          <tr>
+            <td width="15%">2002/11/06</td>
+            <td>Ver. 0.82 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><ol>
+            <li>表への行・列の追加・削除関数を追加しました。</li>
+            <li>addOn～～Listener()をadd～～Listener()に名称変更しました。</li>
+            <li>フォーカス系のイベントリスナーを追加しました。</li>
+            <li>java.utilにStack, Randomを追加。Vectorの仕様をJavaにあわせました。</li>
+            <li>orto.uiパッケージの整理。ImageButtonはButtonを継承せずに、直接Componentを継承することにしました。</li>
+			<li>orto.ui.Containerを作成しました。AnchorButton, Form, IFrame, Panel, Span, TableCell はContainerを継承するように変更しました。</li>
+			</ol>
+            </td>
+          </tr>
+          <tr> 
+            <td width="15%">2002/11/05</td>
+            <td>Ver. 0.81 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><ol>
+            <li>マウス系のイベントリスナーを追加しました。</li>
+            <li>orto.uiにTable, TableRow, TableCell を追加しました。</li>
+            <li>ComponentにsetColor(), setBackgroundColor()など、CSSの「色と背景」関係を追加しました。</li>
+			</ol>
+            </td>
+          </tr>
+          <tr> 
+            <td width="15%">2002/11/04</td>
+            <td>Ver. 0.80 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><ol>
+			<li>1.00へ向けて「技術的可能か検証する」段階から「実用性を高める」段階に移行します。
+			その意味を込めて、このバージョンを0.80とさせていただきます。</li>
+			<li>ObjectStream系、java.lang.Class実装。</li>
+			<li>switch文、負の小さな数、負の割り算、他多数バグ修正。</li>
+			</ol>
+            </td>
+          </tr>
+          <tr> 
+            <td width="15%">2002/10/31</td>
+            <td>Ver. 0.31 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><ol>
+			<li>I/O系をObjectStream以外は実装しました。サンプル・ドキュメントはもう少しお待ちください。</li>
+			<li>パッケージorto.net を追加。Base64を入れました。</li>
+			<li>再び、生成するHTMLが肥大化してきてしまいました。圧縮を考えます。</li>
+			</ol>
+            </td>
+          </tr>
+          <tr> 
+            <td width="15%">2002/10/29</td>
+            <td>Ver. 0.30 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><ol>
+			<li>パッケージorto.io を追加。HTMLConnectionを入れました。しかし、I/O系はもう少しお待ちください。</li>
+			<li>Panel.loadHTML() 実装。外部ファイルを通信して読み込めるようになりました。</li>
+			<li>スレッド関係のバグ２つと、イベント処理のバグ１つ修正。</li>
+			</ol>
+            </td>
+          </tr>
+          <tr> 
+            <td width="15%">2002/10/26</td>
+            <td>Ver. 0.29 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><ol>
+			<li>パッケージjava.io, javax.microedition.io を追加。しかし、まだ使い物になっていません。</li>
+			<li><a href="http://jarg.sourceforge.net/">jarg</a>を使い、圧縮率さらに向上。サルトラ算は39KBになりました。</li>
+			</ol>
+            </td>
+          </tr>
+          <tr> 
+            <td width="15%">2002/10/24</td>
+            <td>Ver. 0.28 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><ol>
+			        <li>orto.uiにAnchorButton, CheckBox, ImageButton, ImageLabel, 
+                      ListBox, Spanを追加しました。</li>
+			<li>orto.uiのLayerをPanelに、TextFieldをTextBoxに名前を変更しました。</li>
+			<li>デバッグ用の不要なファイルを生成していたのを消しました。</li>
+			</ol>
+            </td>
+          </tr>
+          <tr> 
+            <td width="15%">2002/10/23</td>
+            <td>Ver. 0.27 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><ol><li>Netscape 6対応。</li>
+            <li>orto.ui.Browserクラス作成。</li>
+            <li>System.trace() を Browser.trace() に移動。CLDC範囲のAPIはいじらないことにしました。独自のAPIはorto.uiなど、orto以下に入れます。</li>
+            <li>finalなクラスの関数の動的束縛のバグ修正。</li>
+			</ol>
+            </td>
+          </tr>
+         <tr> 
+            <td width="15%">2002/10/21</td>
+            <td>Ver. 0.26 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>残りのjava.lang を一通り実装しました。</td>
+          </tr>
+          <tr> 
+            <td width="15%">2002/10/20</td>
+            <td>Ver. 0.25 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>java.lang.String を一通り実装しました。</td>
+          </tr>
+          <tr> 
+            <td width="15%">2002/10/19</td>
+            <td>Ver. 0.24 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>HTML生成時に必要なシステムクラスだけを組み込むようにしました。</td>
+          </tr>
+          <tr> 
+            <td width="15%">2002/10/18</td>
+            <td>Ver. 0.23 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><ol>
+			<li>Internet Explorer 4 に対応</li>
+			<li>生成するファイルをjsからhtmlに変更しました。</li>
+			</ol></td>
+          </tr>
+          <tr> 
+            <td width="15%">2002/10/17</td>
+            <td>Ver. 0.22 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>チュートリアルを書きました</td>
+          </tr>
+          <tr> 
+            <td width="15%">2002/10/16</td>
+            <td>Ver. 0.21 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>例外処理に対応</td>
+          </tr>
+          <tr> 
+            <td width="15%">2002/10/14</td>
+            <td>Ver. 0.20 β リリース</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>DynamicHTML 上の Java 風言語となりました。</td>
+          </tr><tr> 
+            <td>2002/9/1</td>
+            <td>Ver. 0.10 β リリース</td>
+          </tr><tr>
+            <td></td>
+            <td>Flash4 上の Java 風言語として初リリース。</td>
+          </tr>
+						</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+	<div align="center">Written by <a href="mailto:support@orto.jp">support@orto.jp</a></div>
+</body>
+</html>

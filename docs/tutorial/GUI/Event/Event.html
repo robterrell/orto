@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+	<link href="../../tutorial.css" rel="stylesheet" type="text/css" />
+	<link href="../../index.html" rel="contents" type="text/html" />
+	<link href="../CompContainer/CompContainer.html" rel="prev" type="text/html" />
+	<link href="../Style/Style.html" rel="next" type="text/html" />
+	<link rev="made" href="mailto:support@orto-lang.com" />
+	<title>なにがおきたのかなぁ？</title>
+</head>
+
+<body background="../../back.gif">
+
+<h1>なにがおきたのかなぁ？</h1>
+
+<p>イベント処理は GUI の要です。
+Orto では、基本的に、イベント処理は iアプリの方法を踏襲しています。</p>
+
+<h4>具体例</h4>
+
+<pre>
+public class FormView implements <span style="color:red">ComponentListener</span> {
+
+  private Button button;
+
+  public FormView() {
+    // 中略。ここで表示面の初期化をします。
+    
+    button = mainPanel.getButton("sendButton");
+    button.<span style="color:red">addClickListener</span>(this);
+  }
+  
+  public void <span style="color:red">componentAction</span>(Component source, int type, int param) {
+    if(source == button) {
+      // ここでイベントの処理をします。
+    }
+  }
+}
+</pre>
+
+<p>ポイントは３つです。</p>
+<ol>
+<li>イベントを発生させるコンポーネントに add（イベントの種類）Listener() 関数を呼び出す。</li>
+<li>イベントを受け取るクラスは ComponentListener を実装する。</li>
+<li>そのクラスには、componentAction() 関数を実装する。</li>
+</ol>
+
+<p>今ここでは、Click のイベントを受け取っているので、type には、ComponentListener.ON_CLICK が入ります。</p>
+
+<h4>注意事項</h4>
+
+<p>イベント処理のスレッドは１つしかありません。
+つまり、イベント処理の最中に処理時間のかかることを行うと、次のイベント処理に進めなくなります。
+そういう場合は、スレッドを作ってその処理を行うことをお勧めします。</p>
+
+<p>また、通信関係の処理は、内部処理にイベントを必要としているため、イベント処理のスレッドで通信を
+行わないでください。新しいスレッドを作ってください。具体例を示します。</p>
+
+<pre>
+public class FormView implements ComponentListener {
+  public void componentAction(Component source, int type, int param) {
+    if(source == button) {
+      <span style="color:red">new NeoPanelLoader().start();</span>
+    }
+  }
+  
+  private class NeoPanelLoader extends <span style="color:red">Thread</span> {
+    public void run() {
+      neoPanel.<span style="color:red">loadHTML</span>("neoPanel.html");
+    }
+  }
+}
+</pre>
+
+<p>このように、インナークラスを使う方法が楽です。</p>
+
+<p>それともう一つ。wait() や sleep() などといったスレッド関係の関数をイベント処理の
+スレッドで呼び出さないでください。すべてのスレッドがとまってしまいます。
+そういう場合は、スレッドを作ってから呼び出してください。</p>
+
+</body>
+</html>

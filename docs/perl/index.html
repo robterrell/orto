@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<link rel="author" href="mailto:support@orto.jp" />
+	<link rev="made" href="mailto:support@orto.jp" />
+	<title>Orto - Perl ライブラリ マニュアル</title>
+<style type="text/css">
+	body {
+		padding-right: 3%;
+		padding-left: 3%;
+		background-color: #FFFFFF;
+		background-image: url("back.gif");
+	}
+	h4 {
+		color: rgb(0, 92, 160);
+		margin-top: 0px;
+	}
+	pre {
+		background-color: #FFFFCC;
+		padding-right: 3%;
+		padding-left: 3%;
+		padding-top: 3px;
+		padding-bottom: 3px;
+		border-style: solid;
+		border-width: 1px;
+	}
+	a:link { color: rgb(0, 0, 153) }
+	a:visited { color: rgb(153, 0, 153) }
+	a:active { color: rgb(255, 0, 102) }
+	a:hover { color: rgb(0, 0, 255) }
+	
+	div.exp {
+		padding-left: 3%;
+	}
+</style>
+</head>
+
+<body>
+	<h1>Orto - Perl ライブラリ マニュアル</h1>
+	
+	<h4>概要</h4>
+	<p>orto.pl は Orto ⇔ Perl/CGI 間を通信するライブラリです。Perl 4 以降で使えます。</p>
+	
+	<p>java.io.DataInputStream, DataOutputStream の関数、
+	ObjectInputStream.readLongUTF(), ObjectOutputStream.writeLongUTF() が使えます。
+	ただし、ObjectInputStream.readObject(), ObjectOutputStream.writeObject() は使えません。</p>
+	
+	<h4>サンプル</h4>
+	<p>以下、入出力を行うサンプルの CGI です。Perl スクリプトは EUC-JP で保存してください。</p>
+	<pre>
+#!/usr/local/bin/perl
+
+require 'orto.pl';
+require 'unicode.pl';
+
+$i = &amp;orto'readInt();
+$s = &amp;unicode'u2e( &amp;unicode'UTF8toUTF16( &amp;orto'readUTF() ) );
+
+&amp;orto'writeInt($i);
+&amp;orto'writeUTF( &amp;unicode'UTF16toUTF8( &amp;unicode'e2u("おると") ) );
+
+&amp;orto'send();
+</pre>
+	<table border="1" summary="各行ごとのソースコードの説明">
+		<tr><th nowrap="nowrap">行番号</th><th>説明</th></tr>
+		<tr>
+			<td>３～４</td>
+			<td>この部分はライブラリの使用を宣言しています。
+			orto.pl は通信に必要であり、unicode.pl は UTF-8 ⇔ EUC-JP の変換に必要です。</td>
+		</tr><tr>
+			<td>６～７</td>
+			<td>読み込みを行っています。readUTF() の戻り値は、UTF-8 であり、
+			通常、Perl の中では、EUC-JP を使うので、戻り値を EUC-JP に変換をかけています。
+			UTF8toUTF16 で、UTF8 → UTF-16 の変換を行い、u2e で UTF-16 → EUC-JP の変換をかけています。</td>
+		</tr><tr>
+			<td>９～１０</td>
+			<td>書き込み（CGI から ブラウザへデータ送信）を行っています。
+			読み込みと同様に EUC-JP → UTF-8 の変換を行っています。</td>
+		</tr><tr>
+			<td>１２</td>
+			<td>最後に送信を行っています。必ず、最後に send() を１度だけ呼び出してください。
+			この時、初めて、本当に送信が行われます。それまではデータはメモリーに蓄えられます。
+			send() が "Content-type: text/html\n\n" を出力するので、別途 CGI の中で出力する必要はありません。</td>
+		</tr>
+	</table>
+	<br />
+	
+	<h4>配置方法</h4>
+	<p>サーバーにアップロードするときは、作った CGI スクリプトと orto.pl, unicode.pl を
+	一緒にアップロードしてください。
+	Orto に限った話ではないですが、その時、CGI スクリプトのパーミッションを 755 にすることを忘れないでください。
+	また、CGI スクリプトは EUC-JP で保存してください。
+	</p>
+	
+	<p>unicode.pl ( Masanao Izumo氏 作 ) は Unix でしか動かないそうです。Windows では動かないそうなので、
+	お気をつけください。Perl 5 用でしたら、様々な EUC-JP ⇔ UTF-8 変換モジュールがあるので、
+	そちらをお使いになるのも、一つの方法です。</p>
+	
+	<h4>リファレンス（読み込み系）</h4>
+
+	<div>readBoolean()
+	<div class="exp">真偽値を読み込みます。偽の時は０を、真の時は１を返すので、
+	そのまま if 文で判定することができます。</div>
+	</div>
+	<br />
+
+	<div>readUnsignedByte()
+	<div class="exp">１バイト分の非負数を読み込みます。０～２５５の値を返します。</div>
+	</div><br />
+	
+	<div>readByte()
+	<div class="exp">１バイト分の整数を読み込みます。－１２８～１２７の値を返します。</div>
+	</div><br />
+	
+	<div>readUnsingedShort()
+	<div class="exp">２バイト分の非負数を読み込みます。０～６５５３５の値を返します。</div>
+	</div><br />
+	
+	<div>readShort()
+	<div class="exp">２バイト分の整数を読み込みます。－３２７６８～３２７６７の値を返します。</div>
+	</div><br />
+	
+	<div>readChar()
+	<div class="exp">文字を一文字分読み込みます。返り値のエンコーディングは UTF-8 です。</div>
+	</div><br />
+	
+	<div>readInt()
+	<div class="exp">４バイトの整数を読み込みます。</div>
+	</div><br />
+	
+	<div>readLong()
+	<div class="exp">８バイトの整数を読み込みます。通常、Perl の数値は８バイト浮動小数で管理されるので、
+	大きな数の場合は 52 ビット精度への精度落ちが発生します。</div>
+	</div><br />
+	
+	<div>readUTF()
+	<div class="exp">文字列を読み込みます。返り値のエンコーディングは UTF-8 です。
+	文字列の最大の長さは 64 KB です。</div>
+	</div><br />
+	
+	<div>readLongUTF()
+	<div class="exp">文字列を読み込みます。返り値のエンコーディングは UTF-8 です。
+	文字列の最大の長さは 2GB です。</div>
+	</div><br />
+
+	<h4>リファレンス（書き込み系）</h4>
+
+	<div>writeBoolean(真偽値)
+	<div class="exp">真偽値を書き込みます。Perl における偽の値（"0", 0 など）の場合は０が送信され、
+	真の値の場合は１が送信されます。</div>
+	</div><br />
+	
+	<div>writeByte(整数)
+	<div class="exp">１バイトの整数を書き込みます。－１２８～１２７の値を渡してください。
+	それ以外の場合は下８ビット分が使われます。</div>
+	</div><br />
+	
+	<div>writeShort(整数)
+	<div class="exp">２バイトの整数を書き込みます。－３２７６８～３２７６７の値を渡してください。
+	それ以外の場合は下１６ビット分が使われます。</div>
+	</div><br />
+	
+	<div>writeChar(１文字分の文字列)
+	<div class="exp">１文字分書き込みます。UTF-8 のエンコーディングで渡してください。
+	つまり、最高３バイト分まで使われるということです。送信時はこれを UTF-16 ２バイト分に変換します。
+	なお、２文字以上の文字列を渡した場合は先頭の１文字が使われます。</div>
+	</div><br />
+	
+	<div>writeInt(整数)
+	<div class="exp">４バイト分の整数を書き込みます。</div>
+	</div><br />
+	
+	<div>writeLong(整数)
+	<div class="exp">８バイト分の整数を書き込みます。</div>
+	</div><br />
+	
+	<div>writeUTF(UTF-8 の文字列)
+	<div class="exp">文字列を書き込みます。エンコーディングは UTF-8 で渡してください。
+	文字列の長さは UTF-8 形式で 65535 バイトまでです。
+	それ以上の場合は、65536 バイト以降が切り捨てられます。
+	writeLongUTF() をお使いください。</div>
+	</div><br />
+	
+	<div>writeLongUTF(UTF-8 の文字列)
+	<div class="exp">文字列を書き込みます。エンコーディングは UTF-8 で渡してください。
+	文字列の長さは UTF-8 形式で 2,147,483,647 バイト(2GB)までです。
+	それ以上の場合は、2,147,483,648 バイト以降が切り捨てられます。</div>
+	</div><br />
+	
+	<div>send()
+	<div class="exp">最後に１度だけこの関数を呼び出してください。
+	この関数を呼び出したとき、実際に送信が行われます。それまではメモリーに蓄えられます。
+	send() が "Content-type: text/html\n\n" を出力するので、別途 CGI の中で出力する必要はありません。</div>
+	</div><br />
+
+	<h4>謝辞</h4>
+	<p>A. P. Barrett 氏の base64.pl と Masanao Izumo 氏の unicode.pl を利用させていただきました。
+	ありがとうございます。</p>
+
+</body>
+</html>

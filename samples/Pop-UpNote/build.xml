@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Pop-UpNote" default="ortoar-en" basedir=".">
+
+	<property name="ortoHome" value="../.."/>
+	<property name="ortoarJar" value="${ortoHome}/bin/ortoar.jar"/>
+	<property name="ortoClasses" value="${ortoHome}/lib/ortoClasses.jar"/>
+
+	<target name="ortoar-en">
+
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+
+		<!-- Creates PopUpNote.html -->
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.popupnote.PopUpNote
+				-mainHTML ../design/design-en.html
+				-language en
+				-encoding ISO-8859-1
+				-outputHTML ../PopUpNote-en.html
+				-outputScript ../PopUpNote-en.js
+				jp/orto/popupnote"/>
+		</java>
+	</target>
+
+	<target name="ortoar-ja">
+
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+
+		<!-- Creates PopUpNote.html -->
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.popupnote.PopUpNote
+				-mainHTML ../design/design-ja.html
+				-language ja
+				-encoding Shift_JIS
+				-outputHTML ../PopUpNote-ja.html
+				-outputScript ../PopUpNote-ja.js
+				jp/orto/popupnote"/>
+		</java>
+	</target>
+
+	<target name="compress-en">
+
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+
+		<!-- Creates PopUpNote.html -->
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.popupnote.PopUpNote
+				-mainHTML ../design/design-en.html
+				-language en
+				-encoding ISO-8859-1
+				-outputHTML ../PopUpNote-en.html
+				-outputScript ../PopUpNote-en.js
+				-compress
+				jp/orto/popupnote"/>
+		</java>
+	</target>
+
+	<target name="compress-ja">
+
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+
+		<!-- Creates PopUpNote.html -->
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.popupnote.PopUpNote
+				-mainHTML ../design/design-ja.html
+				-language ja
+				-encoding Shift_JIS
+				-outputHTML ../PopUpNote-ja.html
+				-outputScript ../PopUpNote-ja.js
+				-compress
+				jp/orto/popupnote"/>
+		</java>
+	</target>
+
+</project>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<title>初めにお読みください</title>
+<style type="text/css">
+	body {
+		padding-right: 3%;
+		padding-left: 3%;
+		background-color: #FFFFFF;
+	}
+	h4 {
+		color: rgb(0, 92, 160);
+	}
+	th {
+		background-color: rgb(232,223,149);
+	}
+	a:link { color: rgb(0, 0, 153) }
+	a:visited { color: rgb(153, 0, 153) }
+	a:active { color: rgb(255, 0, 102) }
+	a:hover { color: rgb(0, 0, 255) }
+</style>
+</head>
+
+<body>
+<h1>Orto SDK 日本語版 1.32</h1>
+
+<p><a href="http://orto.jp/">Orto SDK 日本語版</a> をダウンロードいただきありがとうございます。</p>
+
+<h4>１．同梱物</h4>
+<p>
+<table border="1" cellpadding="4" cellspacing="0" style="width: 100%">
+	<tr>
+		<th>ジャンル</th><th>ドキュメント名</th><th>説明</th>
+	</tr><tr>
+		<td rowspan="6" valign="top" style="width: 8em">サンプル</td>
+		<td><a href="../samples/Xetris/Xetris-ja.html" style="width: 11em">Xetris</a></td>
+		<td>落ち物ゲームです。</td>
+	</tr><tr>
+		<td><a href="http://orto.jp/samples/PictureViewer/PictureViewer-ja.html" style="width: 11em">Picture Viewer</a></td>
+		<td>写真を表示します。拡大・縮小が出来ます。</td>
+	</tr><tr>
+		<td><a href="../samples/Pop-UpNote/PopUpNote-ja.html" style="width: 11em">付箋</a></td>
+		<td>付箋です。ドラッグのサンプルです。</td>
+	</tr><tr>
+		<td><a href="../samples/MonkeyTiger/MonkeyTiger-ja.html" style="width: 11em">サルトラ算</a></td>
+		<td>サルとトラが計算をしてくれます。</td>
+	</tr><tr>
+		<td><a href="../samples/Worm/Worm-ja.html">みみず君</a></td>
+		<td>えさを食べさせて、ミミズを成長させてください。</td>
+	</tr><tr>
+		<td><a href="../samples/SampleBoard/">プログラム掲示板</a></td>
+		<td>通信処理などをするサンプルです。</td>
+	</tr><tr>
+		<td rowspan="3" valign="top" nowrap="nowrap">チュートリアル</td>
+		<td valign="top"><a href="tutorial/index.html">Orto チュートリアル</a></td>
+		<td>Orto の全体像を説明したチュートリアルです。</td>
+	</tr><tr>
+		<td><a href="PHP/index.html">PHP</a></td>
+		<td>サーバー側に PHP を使いたい場合にお読みください。リファレンスをかねています。</td>
+	</tr><tr>
+		<td><a href="perl/index.html">Perl</a></td>
+		<td>上の Perl 版です。</td>
+	</tr><tr>
+		<td rowspan="3" valign="top">リファレンス</td>
+		<td><a href="client/index.html">クライアント(Javadoc)</a></td>
+		<td>クライアント側のリファレンスです。</td>
+	</tr><tr>
+		<td><a href="servlet/index.html">サーブレット(Javadoc)</a></td>
+		<td>サーバー側に Servlet を使いたい場合にお読みください。</td>
+	</tr><tr>
+		<td><a href="Ortoar.html">Ortoar</a></td>
+		<td>複数のクラスファイルを一つの HTML に束ねる Ortoar のマニュアルです。</td>
+	</tr>
+</table>
+<br />
+Orto SDK 日本語版はフリーソフトウェアであり、
+生成した HTML プログラムは営利・非営利を問わずご自由にご利用できます。
+ライセンス条項に関しては、<a href="license.txt">こちら</a>をご覧ください。
+</p>
+
+<h4>２．制限事項</h4>
+
+<p>現在の制限事項・バグといたしましては、</p>
+<ol>
+<li><a href="http://java.sun.com/">Java2 SDK 1.4</a> が必要です。1.3 ではサーブレット側の ObjectStream 関係が使えません。</li>
+<li>Internet Explorer 4 以降、Netscape 6 以降、Mozilla、Opera 7 以降で動きます。
+Opera 6、Netscape 4 では動きません。</li>
+<li>long の掛け算・割り算・剰余で 4503599627370496(=2^52) を超えると丸め処理が行われます。
+足し算・引き算・ビット演算などは 64 ビットの精度で行われます。</li>
+</ol>
+
+<h4>３．サーバーへの配備について</h4>
+
+<p>
+Ortoar が生成する HTML ファイルを Web サーバーにアップロードするだけで、
+Orto アプリケーションは利用できますが、Web サーバーの gzip 圧縮を有効にすることを
+強くお勧めします。Orto は gzip 圧縮が有効であることを前提に作られています。
+Apache に組み込む場合は、mod_gzip を組み込み、必要な設定を行ってください。
+Microsoft IIS の場合は、gzip 圧縮を有効にするオプションがあります。
+</p>
+
+<p>
+ISP（プロバイダー）のホームページサービスを利用するなど、
+どうしても、gzip 圧縮を有効に出来ない場合は、Ortoar に -compress オプションを
+つけてください。起動は遅くなりますが圧縮 HTML を生成します。
+</p>
+
+<h4>４．謝辞</h4>
+<p>
+内部で
+<a href="http://jakarta.apache.org/bcel/">BCEL</a>
+を利用させていただきました。<br />
+また、Perl ライブラリに、A. P. Barrett 氏の base64.pl と Masanao Izumo 氏の unicode.pl を利用させていただきました。<br />
+ありがとうございます。</p>
+
+<h4>５．連絡先</h4>
+<p>
+Ortoを今後ともインクリメンタルに開発していきますので、
+なにとぞよろしくお願いいたします。
+<br />
+何かございましたら、<a href="mailto:support@orto.jp">support@orto.jp</a> までご連絡ください。<br />
+<a href="http://orto.jp/ml/">メーリングリスト</a>の方もよろしくお願いいたします。
+</p>
+
+</body>
+</html>

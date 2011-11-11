@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<project name="SampleBoardServlet" default="war" basedir=".">
+
+	<property name="webapps"
+						value="/Program Files/resin/webapps"/>
+	<property name="packWarName" value="SampleBoard.war"/>
+	<property name="ortoLib" value="../../../lib/ortoServlet.jar"/>
+	<property name="servletLib" value="../../../lib/servlet-2_3-fcs-classfiles.zip"/>
+
+	<target name="checkTmp">
+		<!-- tmp フォルダがすでに存在するかチェックします
+               tmp フォルダがあれば安全のため何もしません。 -->
+		<available file="tmp" property="tmpExists"/>
+	</target>
+
+	<target name="war" unless="tmpExists" depends="checkTmp">
+		<!-- ソース表示用をコピーします -->
+		<copy todir="tmp/client"><fileset dir="../../MonkeyTiger/src"/></copy>
+		<copy todir="tmp/client"><fileset dir="../src"/></copy>
+		<copy todir="tmp/servlet"><fileset dir="src"/></copy>
+
+		<!-- コンパイルします -->
+		<javac srcdir="src" destdir="classes" classpath="${ortoLib};${servletLib}"/>
+
+		<!-- SampleBoard.war を作成し、コピーします -->
+		<war warfile="${packWarName}" webxml="web.xml" >
+            <classes dir="classes" excludes=".dependency-info/**" />
+			<lib file="${ortoLib}"/>
+			<fileset dir=".." includes="SampleBoard.html"/>
+			<fileset dir="." includes="monkey.gif, snowflake-bbs-b.gif"/>
+			<fileset dir="tmp"/>
+		</war>
+
+        <!-- tmp フォルダを削除します -->
+		<delete dir="tmp"/>
+	</target>
+
+	<target name="warAndCopy" depends="war">
+		<copy file="${packWarName}" todir="${webapps}"/>
+	</target>
+
+</project>

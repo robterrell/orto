@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+	<link href="../../tutorial.css" rel="stylesheet" type="text/css" />
+	<link href="../../index.html" rel="contents" type="text/html" />
+	<link href="../HelloWorld.html" rel="prev" type="text/html" />
+	<link href="../Event/Event.html" rel="next" type="text/html" />
+	<link rev="made" href="mailto:support@orto.jp" />
+	<title>コンポーネントとコンテナ</title>
+</head>
+
+<body background="../../back.gif">
+
+<h1>コンポーネントとコンテナ</h1>
+
+<h4>クラス関係</h4>
+<p>
+<a href="../../../javadoc/client/orto/ui/Component.html">Component</a>, 
+<a href="../../../javadoc/client/orto/ui/Container.html">Container</a>, 
+<a href="../../../javadoc/client/orto/ui/LoadableContainer.html">LoadableContainer</a> は
+ orto.ui パッケージの基本となるクラスです。
+<p style="text-align:center"><img src="CompContainer1.gif" width="550" height="203" /></p>
+
+<p>Component → Container → LoadableContainer の順に継承しています。
+リファレンスである <a href="../../../javadoc/client/index.html">javadoc</a> をみると、
+特に、Component と Container にたくさんの関数があることがわかります。</p>
+
+<h4>Component が出来ること</h4>
+
+<p>Component にはイベント処理と表示設定の関数がたくさん入っています。
+イベント処理に関しては<a href="../Event/Event.html">次の節</a>で説明します。
+表示設定には、色、大きさ、場所、背景画像などを設定できます。</p>
+
+<h4>Container が出来ること</h4>
+<p>コンテナは中に HTML のタグを持てるコンポーネントのことです。
+例えば、&lt;DIV&gt; は中にタグを持てますが、&lt;INPUT type="text"&gt; は
+中にタグを持てないので、コンテナではありません。</p>
+
+<p>コンテナ内のコンポーネントを取り出すには、getPanel(id) のように、
+HTML 内の ID 属性を目印に、コンポーネントを取り出します。
+HTML では、いかなる ID 属性も重複してはならないことになっていて、
+JavaScript もそれを前提に設計されているのですが、
+それでは、あまりにも使いにくいので、多少は ID 属性が重複しても、
+大丈夫なように Orto は作ってあります。</p>
+
+<p>具体的には、getPanel(id) などでは、コンテナから、幅優先探索で、
+一つ一つのコンポーネントの ID を調べていっています。つまり、getPanel(id) 
+ならば、コンテナから階層的に一番近い DIV で、指定された ID を持つのが
+返ってくるというわけです。</p>
+
+<p style="text-align:center">（ここに図を入れたい）</p>
+
+<p>一般の JavaScript(DOM) のように、getElementById(id) や document.all は
+使っていません。これらは、ID が重複していると正常に取り出せないからです。</p>
+
+<h4>Container の setData(), getData()</h4>
+
+<p>全体とどう絡めて使うかは、<a href="../Style/Style.html">プログラミングスタイル</a>で
+もう一度説明します。</p>
+
+<p style="text-align:center"><img src="../Style/SetData.gif" width="647" height="238" alt="Container.setData()" /></p>
+
+<p>図のとおり、setData() と getData() により、ページ内の情報を、
+一発で設定し、一発で取り出すことが可能になります。
+これにより、表示情報の管理が非常に楽になります。</p>
+
+<p>
+setData(data) でデータをセットするアルゴリズムは以下のとおりです。
+<ol>
+<li>コンテナ内のコンポーネントを幅優先探索で調べていきます。</li>
+<li>みつけたコンポーネントの ID を変数名とみなして、オブジェクトの getter 関数を探します。 例えば、コンポーネントの ID が name であるとすると、getName() という関数を探します。</li>
+<li>関数を呼び出し、その返り値を String.valueOf() を使い文字列に変換して、 見つけたコンポーネントに文字列をセットします。</li>
+</ol>
+</p>
+
+<p>
+コンポーネントの種類に応じて、以下の関数で文字列を設定します。
+</p>
+
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+<tr><th nowrap="nowrap">コンポーネントの種類</th><th>設定関数</th></tr>
+<tr><td	width="40%">LoadableContainer</td><td>setHTML()</td></tr>
+<tr><td>Button</td><td>setLabel()</td></tr>
+<tr><td>ImageButton</td><td>setImage()</td></tr>
+<tr><td>ImageLabel</td><td>setImage()</td></tr>
+<tr><td>TextBox</td><td>setText()</td></tr>
+</table>
+</p>
+
+<p>
+ListBox, Table, TableRow の場合は何もしません。
+</p>
+
+<p>getData(data) は、これを逆向きに行います。</p>
+
+<h4>LoadableContainer</h4>
+
+<p>このクラスは setHTML(html) や loadHTML(htmlFile) により、
+一発でタグ内の内容を設定できます。</p>
+
+<p style="text-align:center"><img src="../Style/LoadHTML.gif" width="500" height="122" alt="LoadableContainer.loadHTML()" /></p>
+
+<p>また、createPanel() を使って、このコンテナ内に新しいパネルを作ることも出来ます。</p>
+
+</body>
+</html>

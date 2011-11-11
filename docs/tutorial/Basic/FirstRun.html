@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+	<link href="../tutorial.css" rel="stylesheet" type="text/css">
+	<link href="../index.html" rel="contents" type="text/html" />
+	<link href="../index.html" rel="prev" type="text/html" />
+	<link href="Internal/Internal.html" rel="next" type="text/html" />
+	<link rev="made" href="mailto:support@orto.jp" />
+	<title>動作環境を整えよう</title>
+</head>
+
+<body background="../back.gif">
+<h1>動作環境を整えよう</h1>
+
+<p>Orto で Java のクラスファイルを HTML ファイルに変換するには、以下のものが必要です。</p>
+
+<table border="1" cellspacing="0" cellpadding="4">
+	<tr><th>名前</th><th>説明</th></tr>
+	<tr><td>Java2 SDK 1.4</td><td>もしなければ、<a href="http://java.sun.com/j2se/1.4/ja/">サン・マイクロシステムズのサイト</a>からダウンロードしてインストールしてください。</td></tr>
+  <tr><td>Orto SDK</td><td><a href="http://orto.jp/">Ortoのホームページ</a>からダウンロードしてください。</td></tr>
+</table>
+
+<h4>Javaソースファイルをコンパイルしよう</h4>
+
+<p>samplesに入っている、サルトラ算をコンパイルしてみましょう。現在のフォルダは、samplesとします。classes フォルダにはコンパイル済みのクラスがあります。</p>
+
+<pre>cd src
+javac -bootclasspath ..\..\..\lib\ortoClasses.jar jp\orto\sample\monkeytiger\*.java</pre>
+
+<p>OrtoはJava2 Standard Edition の標準のクラスライブラリを使いません。
+Java2 Micro Edition のクラスライブラリに近いのを使います。
+そのため、-bootclasspath でortoClasses.jar を指定する必要があります。</p>
+
+<h4>HTML ファイルに変換しよう</h4>
+
+<p>MonkeyTiger.class から MonkeyTiger.html を作ります。</p>
+
+<pre>java -jar ..\..\..\bin\ortoar.jar -main jp.orto.sample.monkeytiger.MonkeyTiger -mainHTML ..\design.html jp\orto\sample\monkeytiger\MonkeyTiger.class</pre>
+
+<p>MonkeyTiger.htmlをブラウザで開けば実行します。
+起動時に -main で指定したクラスのインスタンスオブジェクトが作られ、プログラムの実行が開始します。
+これを指定することは必須です。
+-jar の部分は、javaが処理し、-main の部分はortoar.jarが処理するので、必ず、-jar を先頭にしてください。</p>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="MonkeyTiger" default="ortoar-en" basedir=".">
+
+	<property name="ortoHome" value="../.."/>
+	<property name="ortoarJar" value="${ortoHome}/bin/ortoar.jar"/>
+	<property name="ortoClasses" value="${ortoHome}/lib/ortoClasses.jar"/>
+
+	<target name="ortoar-en">
+
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+
+		<!-- Creates MonkeyTiger.html -->
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.monkeytiger.MonkeyTiger
+				-mainHTML ../design/design-en.html
+				-language en
+				-encoding ISO-8859-1
+				-outputHTML ../MonkeyTiger-en.html
+				-outputScript ../MonkeyTiger-en.js
+				jp/orto/monkeytiger"/>
+		</java>
+	</target>
+
+	<target name="ortoar-ja">
+
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+
+		<!-- Creates MonkeyTiger.html -->
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.monkeytiger.MonkeyTiger
+				-mainHTML ../design/design-ja.html
+				-language ja
+				-encoding Shift_JIS
+				-outputHTML ../MonkeyTiger-ja.html
+				-outputScript ../MonkeyTiger-ja.js
+				jp/orto/monkeytiger"/>
+		</java>
+	</target>
+
+	<target name="compress-en">
+
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+
+		<!-- Creates MonkeyTiger.html -->
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.monkeytiger.MonkeyTiger
+				-mainHTML ../design/design-en.html
+				-language en
+				-encoding ISO-8859-1
+				-outputHTML ../MonkeyTiger-en.html
+				-outputScript ../MonkeyTiger-en.js
+				-compress
+				jp/orto/monkeytiger"/>
+		</java>
+
+		<move file="classes/MonkeyTiger.html" tofile="MonkeyTiger-en.html" />
+		<move file="classes/MonkeyTiger.js" todir="." />
+
+	</target>
+
+	<target name="compress-ja">
+
+		<javac srcdir="src" destdir="classes" bootclasspath="${ortoClasses}"/>
+
+		<!-- Creates MonkeyTiger.html -->
+		<java jar="${ortoarJar}" dir="classes" fork="true" >
+			<arg line="-main jp.orto.monkeytiger.MonkeyTiger
+				-mainHTML ../design/design-ja.html
+				-language ja
+				-encoding Shift_JIS
+				-outputHTML ../MonkeyTiger-ja.html
+				-outputScript ../MonkeyTiger-ja.js
+				-compress
+				jp/orto/monkeytiger"/>
+		</java>
+	</target>
+
+</project>

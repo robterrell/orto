@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<title>サルトラ算</title>
+
+<style type="text/css">
+<!--
+body {
+	margin-right: 3%;
+	margin-left: 3%;
+}
+pre {
+	background-color: #FFFFCC;
+	padding-right: 3%;
+	padding-left: 3%;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-style:solid;
+	border-width:1px;
+}
+h4 {
+	color: rgb(0, 94, 160);
+}
+-->
+</style>
+
+</head>
+
+<body>
+<h1>サルトラ算</h1>
+
+<h4>１．このサンプルについて</h4>
+<p>このサンプルは、サルとトラが足し算をしてくれる Web アプリケーションです。
+MonkeyTiger-ja.html を開けば実行できます。</p>
+
+<h4>２．コンパイル方法</h4>
+<p>コンパイルするには、JDK 1.2 以降が必要です。<br>
+<p>手動でコンパイルするには、以下のようにコマンドを入力してください。
+現在のフォルダは、samplesとします。classes にはコンパイル済みのクラスがあります。</p>
+
+<pre>cd src
+javac -bootclasspath ..\..\..\lib\ortoClasses.jar jp\orto\monkeytiger\*.java
+</pre>
+
+<p>生成される２つのクラスファイルから MonkeyTiger-ja.html を作る必要があります。それは以下のようにやります。</p>
+
+<pre>java -jar ..\..\..\bin\ortoar.jar -main jp.orto.monkeytiger.MonkeyTiger -mainHTML ..\design\design.html -encoding Shift_JIS jp\orto\monkeytiger\*.class
+copy MonkeyTiger.html ..\MonkeyTiger-ja.html</pre>
+
+<h4>３．実行方法</h4>
+MonkeyTiger-ja.html をブラウザから開くだけですが、
+実行時に design フォルダを読みに行くので、MonkeyTiger-ja.html と design フォルダを
+同じフォルダ内におく必要があります。
+
+<h4>４．謝辞</h4>
+<p>かわいいサルとトラの絵は<a href="http://roko.lolipop.jp/">フリー素材　Ｒｏｋｏ</a>さんを利用させていただきました。</p>
+
+<h4>５．ライセンス</h4>
+<p>ソースコードに関しては BSD ライセンスとします。
+画像に関しては、<a href="http://roko.lolipop.jp/">フリー素材　Ｒｏｋｏ</a>さんに従ってください。</p>
+
+</body>
+</html>

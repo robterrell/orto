@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+	<link href="../tutorial.css" rel="stylesheet" type="text/css" />
+	<link href="../index.html" rel="contents" type="text/html" />
+	<link href="../GUI/MonkeyTiger.html" rel="prev" type="text/html" />
+	<link rev="made" href="mailto:support@orto.jp" />
+	<title>サーブレットとつなぐには</title>
+</head>
+
+<body background="../back.gif">
+
+<h1>サーブレットとつなぐには</h1>
+
+<h4>クライアント側の使い方</h4>
+
+<p>Orto はサーブレットを使って、サーバーとつなぐことができます。
+早速、例を見てみましょう。読み込みの例です。</p>
+
+<pre>
+import java.io.*;
+import javax.microedition.io.*;
+import orto.io.*;
+
+（中略）
+
+HTMLConnection connection = new HTMLConnection("http://localhost/servlet/GetData", <span style="color:red">Connector.READ</span>);
+connection.connect();
+DataInputStream in = connection.openDataInputStream();
+</pre>
+
+<p>Orto の orto.io.HTMLConnection の使い方は、iアプリの com.nttdocomo.io.HttpConnection と
+使い方はほとんど同じです。読み書きされるデータはメモリー上にバッファされていて、connect() 関数を
+呼び出したときに送受信されます。</p>
+
+<p>互換性のために、CLDC の javax.microedition.io.Connector.open() を使って、HTMLConnection の
+インスタンスを作る方法も用意してありますが、Orto では、無意味なので、HTMLConnection を直接
+new してください。</p>
+
+<h4>サーブレット側の使い方</h4>
+
+<p>サーブレット側から書き出す例です。</p>
+
+<pre>
+import javax.servlet.http.*;
+import javax.servlet.*;
+import java.io.*;
+
+public class GetData extends HttpServlet {
+  public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    HTMLOutputStream out = new HTMLOutputStream(response);
+    out.writeUTF("Hello World");
+    out.<span style="color:red">send()</span>;
+  }
+}
+</pre>
+
+<p>Orto では、クライアント側が受信だけの場合は GET で、送受信する場合は POST で通信します。
+そのため、サーブレット側では、doGet() や doPost() を継承するのではなく、service() を継承することを
+お勧めします。</p>
+
+<p>クライアント側で、connect() が必要であったように、サーブレット側でも、send() を最後に呼び出してください。
+それまでは、メモリー上にバッファされるだけで、send() を呼び出したときに一度に通信します。</p>
+
+<p>HTMLOutputStream は java.io.ObjectOutputStream を継承しているので、
+そのまま、ObjectOutputStream や DataOutputStream で使える関数が使えます。
+なお、Java2 Standard Edition とは異なり、Orto のクライアント側の ObjectOutputStream は 
+DataOutputStream を継承しているので、この２つのストリームを混在して使うことができます。
+Java2 Standard Edition では、ObjectOutputStream で、writeUTF() したのを、
+DataInputStream の readUTF() では読めませんが、Orto では出来ます。</p>
+
+<h4>読み書きをする</h4>
+
+<p>上では、一方向の通信でしたが、双方向通信をしてみましょう。
+クライアント側は次のようになります。</p>
+
+<pre>
+HTMLConnection connection = new HTMLConnection("http://localhost/servlet/ReadWriteData", <span style="color:red">Connector.READ_WRITE</span>);
+
+DataOutputStream out = connection.openDataOutputStream();
+out.writeBoolean(true);
+
+connection.connect();
+
+DataInputStream in = connection.openDataInputStream();
+String str = in.readUTF();
+</pre>
+
+<p>まず、HTMLConnection() の引数が、Connector.READ_WRITE に変わったことに注意してください。
+Connector.READ なら読み込みだけですし、Connector.WRITE だと書き込みしか出来ません。</p>
+
+<p>さらに、処理の順番も、上で説明したとおり、</p>
+<ol>
+<li>書き込み - メモリーに溜め込みます
+<li>connect() - 通信
+<li>読み込み - メモリーに受信済みから読み込みます
+</ol>
+<p>の順番でお願いします。</p>
+
+<p>サーブレット側は以下のようにします。</p>
+
+<pre>
+public class ReadWriteData extends HttpServlet {
+  public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    HTMLInputStream in = new HTMLInputStream(request);
+    boolean b = in.readBoolean();
+
+    HTMLOutputStream out = new HTMLOutputStream(response);
+    out.writeUTF("Hello World");
+    out.send();
+  }
+}
+</pre>
+
+<p>大差ないですね。HTMLInputStream も java.io.ObjectInputStream を継承しているので、
+ObjectInputStream と DataInputStream の関数を使うことが出来ます。</p>
+
+<h4>裏ではどうやって通信しているの？</h4>
+
+<p>基本的には、JavaScript はバイナリデータの通信は出来ません。
+そのため、Orto では、多少の工夫をしています。
+まず、バイナリデータを Base64 でテキストに変換します。それを、さらに、</p>
+<pre>
+&lt;html&gt;&lt;body&gt;（Base64でエンコードしたデータ）&lt;/body&gt;&lt;/html&gt;
+</pre>
+<p>の形で HTML に変換しています。それゆえ、<span style="color:red">HTML</span>Connection であり、
+<span style="color:red">HTML</span>InputStream なのです。
+変換元のバイナリデータは java.io.DataOutputStream が作り出すバイナリデータそのものです。</p>
+
+<p>Perl, PHP 版はそれぞれのマニュアルを参考にしてください。
+他の言語でサーバーサイドを作りたい方は上のアルゴリズムを参考にしてください。
+</p>
+
+</body>
+</html>

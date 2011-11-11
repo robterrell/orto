@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+	<link href="../tutorial.css" rel="stylesheet" type="text/css">
+	<link href="../index.html" rel="contents" type="text/html" />
+	<link href="Style/Style.html" rel="prev" type="text/html" />
+	<link href="../IO/ConnectServlet.html" rel="next" type="text/html" />
+	<link rev="made" href="mailto:support@orto.jp" />
+	<title>サルトラ算を作ってみよう</title>
+</head>
+
+<body background="../back.gif">
+
+<h1>サルトラ算を作ってみよう</h1>
+
+<p>今回は少し大きめです。
+百聞は一見にしかずなので、<a href="http://orto.jp/samples/MonkeyTiger/MonkeyTiger.html">サルトラ算のサンプル</a>をまず初めに見てください。
+</p>
+
+<h4>デザイン</h4>
+
+<p>以下は、design.html です。Ortoar の -mainHTML で指定します。</p>
+
+<pre>&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;サルトラ算&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="<span style="color:red;">mainPanel</span>" style="position:absolute; left:100px; top:100px;"&gt;
+      サルトラ算&lt;br&gt;
+      &lt;input type='text' id='<span style="color:red;">a</span>'&gt; + &lt;input type='text' id='<span style="color:red;">b</span>'&gt; = &lt;input type='text' id='<span style="color:red;">sum</span>'&gt;&lt;br&gt;
+      &lt;input type='button' id='<span style="color:red;">calcButton</span>' value='計算する' <span style="color:blue;">disabled</span>&gt;
+
+      &lt;div id="<span style="color:red;">monkeyParent</span>" style="position:absolute; left:300px; top:100px; visibility:<span style="color:blue;">hidden</span>;"&gt;
+        &lt;img src='design/iuki1g.gif'&gt;
+      &lt;/div&gt;
+
+      &lt;div id="<span style="color:red;">tigerParent</span>" style="position:absolute; left:300px; top:100px; visibility:<span style="color:blue;">hidden</span>;"&gt;
+        &lt;img src='design/iuki1k.gif'&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<p>Orto アプリを作るときは、まず、デザインから作ります。
+デザインの中にプログラムをまったく含めなくてすむのが、Orto の良さです！
+それぞれのコンポーネントに ID 属性を割り振ってください。
+それを元にコンポーネントを取り出します。
+</p>
+
+<p>現在のブラウザで広く使えるコンポーネントの位置決めの方法は
+<ol>
+<li>&lt;TABLE&gt; を使う。</li>
+<li>style="position: absolute;" を使い、絶対座標で指定する。</li>
+</ol>
+くらいしかありません。
+他の方法はブラウザによって見え方がまちまちなので、あまりお勧めしません。
+</p>
+
+<p>ここでは、絶対座標を利用し、位置決めを行っています。</p>
+
+<h4>全体構造</h4>
+
+<pre>import orto.ui.*;
+
+public class MonkeyTiger implements <span style="color:red;">ComponentListener</span> {
+  private Panel mainPanel, monkeyParent, tigerParent;
+  private Button calcButton;
+
+  public MonkeyTiger() {
+    // 中略
+  }
+
+  public void <span style="color:red;">componentAction</span>(Component source, int type, int param) {
+    // 中略
+  }
+  
+  class MovingThread extends <span style="color:red;">Thread</span> {
+    public void run() {
+      // 中略
+    }
+  }
+}
+</pre>
+
+<p>まず、クラスの全体構造から見ていきましょう。</p>
+
+<p>HelloWorld と大きく違うのは、ComponentListener を実装していて、componentAction() 関数があります。
+これは、「計算する」ボタンのイベントを受け取るためです。
+イベントは発信元から受信先へのいわば伝言ゲームです。この場合は、Orto が発信元です。
+受信先は、MonkeyTiger クラスのインスタンスオブジェクトです。
+このインスタンスオブジェクトは Orto の起動時に作られます。
+だから、MonkeyTiger() 内のプログラムが起動時に実行されるのです。
+</p>
+
+<p>ユーザーインターフェイスのイベントの受信先になるには、ComponentListener を実装しなくてはなりません。
+そのためには、componentAction() 関数を実装する必要があります。
+そして、後でもう一度説明しますが、addOnClickListener() で受信先として登録する必要があります。
+</p>
+
+<p>MovingThread はサルとトラを動かすスレッドです。
+componentAction() から作られます。
+</p>
+
+<h4>MonkeyTiger()</h4>
+
+<pre>public MonkeyTiger() {
+  mainPanel = Browser.getMainWindow().getBody().getPanel("mainPanel");
+  monkeyParent = mainPanel.getPanel("monkeyParent");
+  tigerParent = mainPanel.getPanel("tigerParent");
+
+  // calcButton のイベントリスナーを登録
+  calcButton = mainPanel.getButton("calcButton");
+  calcButton.addClickListener(this);
+  calcButton.setEnabled(true);
+}</pre>
+
+<p>では、MonkeyTiger() 内を見ていきましょう。ここは、起動時に一番最初に実行されるルーチンです。</p>
+
+<table border="1" cellpadding="4" cellspacing="0">
+	<tr><th nowrap="nowrap">行番号</th><th>説明</th></tr>
+	<tr><td align="center">１</td>
+		<td>&lt;BODY&gt; から id 属性が mainPanel の &lt;DIV&gt; を取り出しています。
+		&lt;DIV&gt; が Orto では Panel になります。
+		</td>
+	</tr><tr>
+		<td align="center">２～３</td>
+		<td>さらに mainPanel の中から monkeyParent と tigerParent を取り出しています。
+		これがあのひょこひょこ移動するサルとトラの元になります。
+		</td>
+	</tr><tr>
+		<td align="center">６</td>
+		<td>mainPanel の中から id 属性が calcButton の &lt;INPUT type="button"&gt; を取り出しています。
+		</td>
+	</tr><tr>
+		<td align="center">７</td>
+		<td>calcButton が押されたというイベントの受け取り先をして指定してます。
+		今回は自分自身のオブジェクトを指定していますが、別のクラスに CompoentListener を実装して、
+		そのインスタンスオブジェクトをここに指定してもかまいません。
+		</td>
+	</tr><tr>
+		<td align="center">８</td>
+		<td>最後に design.html では無効にしてあった calcButton を有効にしています。</td>
+	</tr>
+</table>
+
+<h4>componentAction()</h4>
+
+<pre>public boolean componentAction(Component source, int type, int param) {
+  if (source == calcButton) {
+    // Panel.move() を使っているので、スレッドを作る必要があります。
+    new MovingThread().start();
+  }
+  return true;
+}</pre>
+
+<p>componentAction() 関数がイベントの受信先です。
+source がイベントの発信元のオブジェクトです。
+type がイベントの種類です。
+param は今回は使用しません。
+このサルトラ算では、イベントの発信元はボタン以外はありえないので、
+souce は必ず calcButton で、type は ComponentListener.ON_CLICK です。
+</p>
+
+<p>if 文の中を見て行きましょう。
+サルやトラを移動させるのに Component.move() 関数を使っています。
+これはスレッドを必要とする関数です。
+スレッドを必要とする関数を componentAction() 関数から呼び出すには、
+新しいスレッドを作る必要があります。
+その新しいスレッドが MovingThread です。
+</p>
+
+<p>最後に true を返していますが、これは、ブラウザのデフォルトの処理を
+キャンセルせずに通常通り処理するということを意味しています。
+特に目的のないときは true を返してください。
+</p>
+
+<h4>MovingThread</h4>
+
+<pre>class MovingThread extends Thread {
+  public void run() {
+    // 計算ボタンを無効にする。
+    calcButton.setEnabled(false);
+
+    // a + b の a と b を収得する
+    int a = Integer.parseInt(mainPanel.getTextBox("a").getText());
+    int b = Integer.parseInt(mainPanel.getTextBox("b").getText());
+
+    // サルを a 匹、トラを b 匹呼んで来る
+    int sum = 0;
+    for(int i=0; i&lt;a; i++) {
+      Panel rabbit = monkeyParent.clone();
+      rabbit.setVisible(true);
+      rabbit.move(sum * 32, 100, 500);
+      // 合計を表示する
+      sum++;
+      mainPanel.getTextBox("sum").setText(String.valueOf(sum));
+    }
+    for(int i=0; i&lt;b; i++) {
+      Panel tiger = tigerParent.clone();
+      tiger.setVisible(true);
+      tiger.move(sum * 32, 100, 500);
+      // 合計を表示する
+      sum++;
+      mainPanel.getTextBox("sum").setText(String.valueOf(sum));
+    }
+  }
+}</pre>
+
+<p>
+<table border="1" cellspacing="0" cellpadding="4">
+	<tr><th nowrap="nowrap">行番号</th><th>説明</th></tr>
+	<tr>
+		<td align="center">２</td>
+		<td>２回ボタンを押せないようにボタン操作を無効にしています。
+		</td>
+	</tr><tr>
+		<td align="center">５～６</td>
+		<td>
+			mainPanel.getTextBox(&quot;a&quot;) で、mainPanel の中から、
+			id 属性が a のテキストフィールドを取り出しています。
+			そこに入力された文字が必要なので、getText() で取り出しています。
+			そして、それを数字に変換するべく、Integer.parseInt() を利用しています。
+			こうして、入力された文字が a と b という変数に数字として入ります。</td>
+	</tr><tr>
+		<td align="center">１０</td>
+		<td>
+			次は、サルとトラを移動させる部分です。
+			サルは a 匹なので、a 回ループをまわしています。
+		</td>
+	</tr><tr>
+		<td align="center">１１</td>
+		<td>
+			<p>monkeyParent のクローンを作っています。
+			monkeyParent は最初から最後まで非表示で、表示して動き回っているのは、このクローンの方です。</p>
+			<p>
+			Orto の API を作る者として、
+			なぜ、new Panel(monkeyParent) という形式にせず、monkeyParent.clone() にしたかというと、
+			前者の形式だと、Java のインスタンスオブジェクトを複製しているだけに誤解されると思ったからです。
+			実際は、HTML 内でも複製していますし、新しい Java のオブジェクトも生成しています。
+			だから、clone() という関数にしました。
+			</p>
+		</td>
+	</tr><tr>
+		<td align="center">１２</td>
+		<td>
+			クローン元が非表示だったので、クローン先も非表示になっています。
+			だからクローンを表示させています。
+		</td>
+	</tr><tr>
+		<td align="center">１３</td>
+		<td>
+			クローンを移動させています。<br />
+			ここでは setLocation() ではなく move() を使っています。
+			setLocation() では瞬時に移動します。その変化は不連続であり、いわゆるワープをします。
+			それにたいして、move() は連続的に移動します。
+			最初の２つの引数が移動先の座標で、３番目は移動にかける時間です。
+			単位はミリセカンド(ms)なので、0.5秒で移動しています。
+		</td>
+	</tr><tr>
+		<td align="center" nowrap="nowrap">１５～１６</td>
+		<td>
+			最後に、累計を計算し、setText() で設定しています。
+		</td>
+	</tr>
+</table>
+</p>
+
+<p>トラの部分はまったく同じなので、説明は省略します。</p>
+
+</body>
+</html>

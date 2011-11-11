@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<link rel="author" href="mailto:support@orto.jp" />
+	<link rev="made" href="mailto:support@orto.jp" />
+	<title>Orto - Perl ライブラリ マニュアル</title>
+<style type="text/css">
+	body {
+		padding-right: 3%;
+		padding-left: 3%;
+		background-color: #FFFFFF;
+		background-image: url("back.gif");
+	}
+	h4 {
+		color: rgb(0, 92, 160);
+		margin-top: 0px;
+	}
+	pre {
+		background-color: #FFFFCC;
+		padding-right: 3%;
+		padding-left: 3%;
+		padding-top: 3px;
+		padding-bottom: 3px;
+		border-style: solid;
+		border-width: 1px;
+	}
+	a:link { color: rgb(0, 0, 153) }
+	a:visited { color: rgb(153, 0, 153) }
+	a:active { color: rgb(255, 0, 102) }
+	a:hover { color: rgb(0, 0, 255) }
+	
+	div.exp {
+		padding-left: 3%;
+	}
+</style>
+</head>
+
+<body>
+	<h1>Orto - PHP ライブラリ マニュアル</h1>
+	
+	<h4>概要</h4>
+	<p>orto.php は Orto ⇔ PHP 間を通信するライブラリです。PHP 4.0.6 以降で使えます。</p>
+	
+	<p>java.io.DataInputStream, DataOutputStream の関数、
+	ObjectInputStream.readLongUTF(), ObjectOutputStream.writeLongUTF() が使えます。
+	ただし、ObjectInputStream.readObject(), ObjectOutputStream.writeObject() は使えません。</p>
+	
+	<h4>サンプル</h4>
+	<p>以下、入出力を行うサンプルのスクリプトです。</p>
+	<pre>
+&lt;?php
+require 'orto.php';
+
+$i = orto_readInt();
+$s = orto_readUTF();
+
+orto_writeInt($i);
+orto_writeUTF( "おると" );
+
+orto_send();
+?&gt;
+</pre>
+	<table border="1" summary="各行ごとのソースコードの説明">
+		<tr><th nowrap="nowrap">行番号</th><th>説明</th></tr>
+		<tr>
+			<td>２</td>
+			<td>この部分はライブラリの使用を宣言しています。</td>
+		</tr><tr>
+			<td>４～５</td>
+			<td>読み込みを行っています。orto_readUTF() は自動的に内部エンコーディングに変換します。</td>
+		</tr><tr>
+			<td>７～８</td>
+			<td>書き込みを行っています。</td>
+		</tr><tr>
+			<td>１０</td>
+			<td>最後に送信を行っています。必ず、最後に orto_send() を１度だけ呼び出してください。
+			この時、初めて、本当に送信が行われます。それまではデータはメモリーに蓄えられます。</td>
+		</tr>
+	</table>
+	<br />
+	
+	<h4>配置方法</h4>
+	<p>orto.php は mbstring モジュールを必要としています。mbstring はデフォルトでは組み込まれないので、
+	./configure の時に、--enable-mbstring を指定し、かつ、php.ini で mbstring を有効にしてください。</p>
+	<p>また、サーバーにアップロードするときは、作ったスクリプトと orto.php を一緒にアップロードしてください。
+	</p>
+	
+	<h4>リファレンス（読み込み系）</h4>
+
+	<div>orto_readBoolean()
+	<div class="exp">真偽値を読み込みます。</div>
+	</div>
+	<br />
+
+	<div>orto_readUnsignedByte()
+	<div class="exp">１バイト分の非負数を読み込みます。０～２５５の値を返します。</div>
+	</div><br />
+	
+	<div>orto_readByte()
+	<div class="exp">１バイト分の整数を読み込みます。－１２８～１２７の値を返します。</div>
+	</div><br />
+	
+	<div>orto_readUnsingedShort()
+	<div class="exp">２バイト分の非負数を読み込みます。０～６５５３５の値を返します。</div>
+	</div><br />
+	
+	<div>orto_readShort()
+	<div class="exp">２バイト分の整数を読み込みます。－３２７６８～３２７６７の値を返します。</div>
+	</div><br />
+	
+	<div>orto_readChar()
+	<div class="exp">文字を一文字分読み込みます。</div>
+	</div><br />
+	
+	<div>orto_readInt()
+	<div class="exp">４バイトの整数を読み込みます。</div>
+	</div><br />
+	
+	<div>orto_readLong()
+	<div class="exp">８バイトの整数を読み込みます。通常、PHP の数値は８バイト浮動小数で管理されるので、
+	大きな数の場合は 52 ビット精度への精度落ちが発生します。</div>
+	</div><br />
+	
+	<div>orto_readUTF()
+	<div class="exp">文字列を読み込みます。文字列の最大の長さは 64 KB です。戻り値は内部エンコーディングです。</div>
+	</div><br />
+	
+	<div>orto_readLongUTF()
+	<div class="exp">文字列を読み込みます。文字列の最大の長さは 2GB です。戻り値は内部エンコーディングです。</div>
+	</div><br />
+
+	<h4>リファレンス（書き込み系）</h4>
+
+	<div>orto_writeBoolean(真偽値)
+	<div class="exp">真偽値を書き込みます。</div>
+	</div><br />
+	
+	<div>orto_writeByte(整数)
+	<div class="exp">１バイトの整数を書き込みます。－１２８～１２７の値を渡してください。
+	それ以外の場合は下８ビット分が使われます。</div>
+	</div><br />
+	
+	<div>orto_writeShort(整数)
+	<div class="exp">２バイトの整数を書き込みます。－３２７６８～３２７６７の値を渡してください。
+	それ以外の場合は下１６ビット分が使われます。</div>
+	</div><br />
+	
+	<div>orto_writeChar(１文字分の文字列)
+	<div class="exp">１文字分書き込みます。送信時はこれを UTF-16LE ２バイト分に変換します。
+	なお、２文字以上の文字列を渡した場合は先頭の１文字が使われます。</div>
+	</div><br />
+	
+	<div>orto_writeInt(整数)
+	<div class="exp">４バイト分の整数を書き込みます。</div>
+	</div><br />
+	
+	<div>orto_writeLong(整数)
+	<div class="exp">８バイト分の整数を書き込みます。</div>
+	</div><br />
+	
+	<div>orto_writeUTF(文字列)
+	<div class="exp">文字列を書き込みます。
+	この関数の内部で、mbstring により UTF-8 に変換されます。
+	文字列の長さは UTF-8 形式で 65535 バイトまでです。
+	それ以上の場合は、65536 バイト以降が切り捨てられます。
+	writeLongUTF() をお使いください。</div>
+	</div><br />
+	
+	<div>orto_writeLongUTF(文字列)
+	<div class="exp">文字列を書き込みます。
+	この関数の内部で、mbstring により UTF-8 に変換されます。
+	文字列の長さは UTF-8 形式で 2,147,483,647 バイト(2GB)までです。
+	それ以上の場合は、2,147,483,648 バイト以降が切り捨てられます。</div>
+	</div><br />
+	
+	<div>orto_send()
+	<div class="exp">最後に１度だけこの関数を呼び出してください。
+	この関数を呼び出したとき、実際に送信が行われます。それまではメモリーに蓄えられます。</div>
+	</div><br />
+
+</body>
+</html>
